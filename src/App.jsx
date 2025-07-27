@@ -4,7 +4,6 @@ import ProductCart from "./components/card/Product/productNormalCart";
 function App() {
   return (
     <div>
-      <h1>MORO</h1>
       <MenuPage />
       <ProductCart />
     </div>
