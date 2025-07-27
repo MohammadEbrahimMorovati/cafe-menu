@@ -1,18 +1,19 @@
-import axios from 'axios';
+import axios from "axios";
 
 // ساخت اینستنس اصلی axios با baseURL
 const api = axios.create({
-  baseURL: 'http://localhost:4000', // 🔁 این رو تغییر بده
+  baseURL: "http://localhost:4000", // 🔁 این رو تغییر بده
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 
 // افزودن توکن به هر درخواست در صورت وجود
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token'); // یا از context/state
+    const token = localStorage.getItem("token"); // یا از context/state
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,10 +29,10 @@ api.interceptors.response.use(
     // مدیریت خطاهای رایج
     if (error.response) {
       if (error.response.status === 401) {
-        console.warn('Unauthorized! Redirect to login...');
+        console.warn("Unauthorized! Redirect to login...");
         // مثلاً redirect به login
       } else if (error.response.status === 500) {
-        console.error('Server Error!');
+        console.error("Server Error!");
       }
     }
     return Promise.reject(error);
