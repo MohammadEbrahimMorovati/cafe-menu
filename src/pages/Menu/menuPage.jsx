@@ -6,6 +6,7 @@ import api from "../../api/api";
 
 const MenuPage = () => {
   const [products, setProducts] = useState([]);
+  console.log("menu");
 
   useEffect(() => {
     api.get("/products")

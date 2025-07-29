@@ -1,5 +1,6 @@
 const ProductCart = ({ products = [] }) => {
   if (!products.length) return null;
+  console.log("cart");
 
   return (
     <div className="min-h-screen bg-[#613A27] flex items-center justify-center p-4">

@@ -1,12 +1,81 @@
-# React + Vite
+# Café Menu App (React + JSON Server)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an online café menu built with **React** and **JSON Server**. Users can browse different categories of food, drinks, and desserts with detailed information.
 
-Currently, two official plugins are available:
+## 📁 Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+├── db.json              # Database (categories and products)
+├── server.js            # JSON server setup
+├── package.json         # Project dependencies and scripts
+├── public/              # Static public files (images, icons, etc.)
+├── src/                 # Main React source code
+│   ├── api/             # API request handlers
+│   ├── assets/          # Images, fonts, and static assets
+│   ├── components/      # Reusable React components
+│   ├── hooks/           # Custom React hooks
+│   ├── pages/           # Application pages (Home, Categories, Product)
+│   ├── service/         # Utility services (e.g., HTTP clients)
+│   ├── theme/           # Styles, colors, typography, and theme configuration
+```
 
-## Expanding the ESLint configuration
+## 🚀 Quick Start
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/cafe-menu.git
+cd cafe-menu
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start JSON Server
+
+```bash
+npm start
+```
+
+The server will run on **http://localhost:4000**.
+
+You can access the API endpoints:
+
+```
+http://localhost:4000/products
+http://localhost:4000/categories
+```
+
+## 📦 Sample Data
+
+The `db.json` file includes over 50 categories and products with the following fields:
+
+- **name**: Product name
+- **description**: Short description
+- **price**: Product price
+- **image**: Image path
+- **categoryId**: Category ID
+
+## 🛠️ Recommended Improvements
+
+- Add **React Router** for multi-page navigation (Home, Category, Product details)
+- Implement **product filtering and search**
+- Add **shopping cart** and order management
+- Use UI libraries like **TailwindCSS**, **MUI**, or **Chakra UI**
+- Implement an **admin dashboard** to add/remove products
+
+## ⚙️ Technologies
+
+- React (with Vite)
+- JSON Server
+- Node.js
+
+## 📄 License
+
+**MIT**
+
+---
+> Built with ❤️ for smart café projects and learning purposes.
