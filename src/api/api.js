@@ -2,7 +2,7 @@ import axios from "axios";
 
 // ساخت اینستنس اصلی axios با baseURL
 const api = axios.create({
-  baseURL: "http://localhost:4000", // 🔁 این رو تغییر بده
+  baseURL: "https://cafejsonserver.liara.run", // 🔁 این رو تغییر بده
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

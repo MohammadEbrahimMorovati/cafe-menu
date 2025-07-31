@@ -40,13 +40,13 @@ npm install
 npm start
 ```
 
-The server will run on **http://localhost:4000**.
+The server will run on **https://cafejsonserver.liara.run**.
 
 You can access the API endpoints:
 
 ```
-http://localhost:4000/products
-http://localhost:4000/categories
+https://cafejsonserver.liara.run/products
+https://cafejsonserver.liara.run/categories
 ```
 
 ## 📦 Sample Data
@@ -78,4 +78,5 @@ The `db.json` file includes over 50 categories and products with the following f
 **MIT**
 
 ---
+
 > Built with ❤️ for smart café projects and learning purposes.
