@@ -6,7 +6,7 @@ import {
 import { getAllCategories } from "../../services/category/categoryService";
 import { CATEGORIES } from "../../constants";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
-import CoffeeLogo from "../../components/ui/CoffeeLogo";
+import StickyHeader from "../../components/ui/StickyHeader";
 import FeaturedProducts from "../../components/ui/FeaturedProducts";
 import SectionDivider from "../../components/ui/SectionDivider";
 import ProductCard from "../../components/ui/ProductCard";
@@ -39,37 +39,38 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#613A27] p-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="border-4 border-dashed border-white rounded-[46px] p-6 bg-[#FBE6D3]">
-          {/* لوگوی قهوه */}
-          <CoffeeLogo />
+    <div className="min-h-screen bg-[#613A27]">
+      {/* هدر چسبنده */}
+      <StickyHeader />
+      <div className="p-4 pt-0">
+        <div className="max-w-2xl mx-auto">
+          <div className="border-4 border-dashed border-white rounded-[46px] p-6 bg-[#FBE6D3] mt-4">
+            {/* بخش محصولات ویژه */}
+            <FeaturedProducts products={products} title="محصولات ویژه" />
 
-          {/* بخش محصولات ویژه */}
-          <FeaturedProducts products={products} title="محصولات ویژه" />
+            {/* خط جداکننده */}
+            <SectionDivider title="برگر" />
 
-          {/* خط جداکننده */}
-          <SectionDivider title="برگر" />
-
-          {/* منوی تفصیلی برگرها */}
-          <div className="space-y-4 mb-8">
-            {burgerProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          {/* تمام محصولات بر اساس دسته‌بندی */}
-          <div className="space-y-6">
-            {categories
-              .filter((category) => category.id !== CATEGORIES.BURGER) // حذف برگر چون جداگانه نمایش داده می‌شود
-              .map((category) => (
-                <CategorySection
-                  key={category.id}
-                  products={products}
-                  categoryId={category.id}
-                  title={category.name}
-                />
+            {/* منوی تفصیلی برگرها */}
+            <div className="space-y-4 mb-8">
+              {burgerProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
               ))}
+            </div>
+
+            {/* تمام محصولات بر اساس دسته‌بندی */}
+            <div className="space-y-6">
+              {categories
+                .filter((category) => category.id !== CATEGORIES.BURGER) // حذف برگر چون جداگانه نمایش داده می‌شود
+                .map((category) => (
+                  <CategorySection
+                    key={category.id}
+                    products={products}
+                    categoryId={category.id}
+                    title={category.name}
+                  />
+                ))}
+            </div>
           </div>
         </div>
       </div>
