@@ -6,7 +6,10 @@ const ProductCard = ({ product, showImage = true }) => {
   const finalPrice = calculateFinalPrice(product.price, product.discount);
 
   return (
-    <div className="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow">
+    <div
+      id={`product-${product.id}`}
+      className="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow"
+    >
       <div className="flex-1">
         <h3 className="text-[#613A27] font-bold text-lg mb-1">
           {product.name}
