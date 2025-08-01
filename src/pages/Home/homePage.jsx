@@ -3,6 +3,7 @@ import {
   getAllProducts,
   getBurgerProducts,
 } from "../../services/products/productService";
+import { getAllCategories } from "../../services/category/categoryService";
 import { CATEGORIES } from "../../constants";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import CoffeeLogo from "../../components/ui/CoffeeLogo";
@@ -13,12 +14,15 @@ import CategorySection from "../../components/ui/CategorySection";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllProducts()
-      .then((res) => {
-        setProducts(res.data);
+    // دریافت همزمان محصولات و دسته‌بندی‌ها از بک‌اند
+    Promise.all([getAllProducts(), getAllCategories()])
+      .then(([productsRes, categoriesRes]) => {
+        setProducts(productsRes.data);
+        setCategories(categoriesRes.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -29,24 +33,6 @@ const HomePage = () => {
 
   // فیلتر کردن محصولات برگر
   const burgerProducts = getBurgerProducts(products);
-
-  // دسته‌بندی‌های موجود
-  const categories = [
-    { id: CATEGORIES.PIZZA, title: "پیتزا" },
-    { id: CATEGORIES.SANDWICH, title: "ساندویچ" },
-    { id: CATEGORIES.SALAD, title: "سالاد" },
-    { id: CATEGORIES.SOUP, title: "سوپ" },
-    { id: CATEGORIES.KEBAB, title: "کباب" },
-    { id: CATEGORIES.IRANIAN, title: "غذاهای ایرانی" },
-    { id: CATEGORIES.PASTA, title: "پاستا" },
-    { id: CATEGORIES.CAKE, title: "دسر" },
-    { id: CATEGORIES.JUICE, title: "آبمیوه" },
-    { id: CATEGORIES.COFFEE, title: "قهوه" },
-    { id: CATEGORIES.TEA, title: "چای" },
-    { id: CATEGORIES.HERBAL, title: "دمنوش" },
-    { id: CATEGORIES.SHAKE, title: "شیک" },
-    { id: CATEGORIES.SMOOTHIE, title: "اسموتی" },
-  ];
 
   if (loading) {
     return <LoadingSpinner />;
@@ -74,14 +60,16 @@ const HomePage = () => {
 
           {/* تمام محصولات بر اساس دسته‌بندی */}
           <div className="space-y-6">
-            {categories.map((category) => (
-              <CategorySection
-                key={category.id}
-                products={products}
-                categoryId={category.id}
-                title={category.title}
-              />
-            ))}
+            {categories
+              .filter((category) => category.id !== CATEGORIES.BURGER) // حذف برگر چون جداگانه نمایش داده می‌شود
+              .map((category) => (
+                <CategorySection
+                  key={category.id}
+                  products={products}
+                  categoryId={category.id}
+                  title={category.name}
+                />
+              ))}
           </div>
         </div>
       </div>
