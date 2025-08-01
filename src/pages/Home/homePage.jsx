@@ -40,36 +40,39 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-[#613A27]">
-      {/* هدر چسبنده */}
       <StickyHeader />
       <div className="p-4 pt-0">
         <div className="max-w-2xl mx-auto">
-          <div className="border-4 border-dashed border-white rounded-[46px] p-6 bg-[#FBE6D3] mt-4">
-            {/* بخش محصولات ویژه */}
-            <FeaturedProducts products={products} title="محصولات ویژه" />
+          {/* لایه بیرونی با بردر نقطه‌چین */}
+          <div className="border-5 border-dashed border-[#FBE6D3] rounded-[57px] p-2">
+            {/* لایه داخلی با پس‌زمینه کرمی */}
+            <div className="bg-[#FBE6D3] p-6 rounded-[40px]">
+              {/* محصولات ویژه */}
+              <FeaturedProducts products={products} title="محصولات ویژه" />
 
-            {/* خط جداکننده */}
-            <SectionDivider title="برگر" />
+              {/* جداکننده */}
+              <SectionDivider title="برگر" />
 
-            {/* منوی تفصیلی برگرها */}
-            <div className="space-y-4 mb-8">
-              {burgerProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-
-            {/* تمام محصولات بر اساس دسته‌بندی */}
-            <div className="space-y-6">
-              {categories
-                .filter((category) => category.id !== CATEGORIES.BURGER) // حذف برگر چون جداگانه نمایش داده می‌شود
-                .map((category) => (
-                  <CategorySection
-                    key={category.id}
-                    products={products}
-                    categoryId={category.id}
-                    title={category.name}
-                  />
+              {/* محصولات برگر */}
+              <div className="space-y-4 mb-8">
+                {burgerProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
                 ))}
+              </div>
+
+              {/* سایر دسته‌بندی‌ها */}
+              <div className="space-y-6">
+                {categories
+                  .filter((category) => category.id !== CATEGORIES.BURGER)
+                  .map((category) => (
+                    <CategorySection
+                      key={category.id}
+                      products={products}
+                      categoryId={category.id}
+                      title={category.name}
+                    />
+                  ))}
+              </div>
             </div>
           </div>
         </div>
