@@ -1,47 +1,9 @@
 import { calculateFinalPrice } from "../../services/products/productService";
-import { CATEGORIES } from "../../constants";
+import { getCategoryIcon } from "../../constants";
 
 const ProductCard = ({ product, showImage = true }) => {
   const hasDiscount = product.discount && product.discount > 0;
   const finalPrice = calculateFinalPrice(product.price, product.discount);
-
-  // تابع برای تعیین آیکون بر اساس دسته‌بندی
-  const getProductIcon = (categoryId) => {
-    switch (categoryId) {
-      case CATEGORIES.BURGER:
-        return "🍔";
-      case CATEGORIES.PIZZA:
-        return "🍕";
-      case CATEGORIES.SANDWICH:
-        return "🥪";
-      case CATEGORIES.SALAD:
-        return "🥗";
-      case CATEGORIES.SOUP:
-        return "🍲";
-      case CATEGORIES.KEBAB:
-        return "🍖";
-      case CATEGORIES.IRANIAN:
-        return "🍚";
-      case CATEGORIES.PASTA:
-        return "🍝";
-      case CATEGORIES.CAKE:
-        return "🍰";
-      case CATEGORIES.JUICE:
-        return "🧃";
-      case CATEGORIES.COFFEE:
-        return "☕";
-      case CATEGORIES.TEA:
-        return "🫖";
-      case CATEGORIES.HERBAL:
-        return "🌿";
-      case CATEGORIES.SHAKE:
-        return "🥤";
-      case CATEGORIES.SMOOTHIE:
-        return "🥤";
-      default:
-        return "🍽️";
-    }
-  };
 
   return (
     <div className="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow">
@@ -72,7 +34,7 @@ const ProductCard = ({ product, showImage = true }) => {
       {showImage && (
         <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center ml-4">
           <span className="text-[#613A27] text-2xl">
-            {getProductIcon(product.categoryId)}
+            {getCategoryIcon(product.categoryId)}
           </span>
         </div>
       )}

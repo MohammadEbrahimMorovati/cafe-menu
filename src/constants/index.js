@@ -14,7 +14,7 @@ export const API_CONFIG = {
   TIMEOUT: 10000,
 };
 
-// دسته‌بندی‌های محصولات
+// دسته‌بندی‌های محصولات - فقط برای مقایسه و آیکون‌ها
 export const CATEGORIES = {
   BURGER: 1,
   PIZZA: 5,
@@ -31,6 +31,44 @@ export const CATEGORIES = {
   HERBAL: 17,
   SHAKE: 18,
   SMOOTHIE: 19,
+};
+
+// تابع برای تعیین آیکون بر اساس ID دسته‌بندی
+export const getCategoryIcon = (categoryId) => {
+  switch (categoryId) {
+    case CATEGORIES.BURGER:
+      return "🍔";
+    case CATEGORIES.PIZZA:
+      return "🍕";
+    case CATEGORIES.SANDWICH:
+      return "🥪";
+    case CATEGORIES.SALAD:
+      return "🥗";
+    case CATEGORIES.SOUP:
+      return "🍲";
+    case CATEGORIES.KEBAB:
+      return "🍖";
+    case CATEGORIES.IRANIAN:
+      return "🍚";
+    case CATEGORIES.PASTA:
+      return "🍝";
+    case CATEGORIES.CAKE:
+      return "🍰";
+    case CATEGORIES.JUICE:
+      return "🧃";
+    case CATEGORIES.COFFEE:
+      return "☕";
+    case CATEGORIES.TEA:
+      return "🫖";
+    case CATEGORIES.HERBAL:
+      return "🌿";
+    case CATEGORIES.SHAKE:
+      return "🥤";
+    case CATEGORIES.SMOOTHIE:
+      return "🥤";
+    default:
+      return "🍽️";
+  }
 };
 
 // تنظیمات UI
