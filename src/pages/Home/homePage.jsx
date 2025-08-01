@@ -32,7 +32,6 @@ const HomePage = () => {
 
   // دسته‌بندی‌های موجود
   const categories = [
-    { id: CATEGORIES.BURGER, title: "برگر" },
     { id: CATEGORIES.PIZZA, title: "پیتزا" },
     { id: CATEGORIES.SANDWICH, title: "ساندویچ" },
     { id: CATEGORIES.SALAD, title: "سالاد" },
