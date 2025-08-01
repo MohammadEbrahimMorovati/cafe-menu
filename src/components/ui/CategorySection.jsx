@@ -11,9 +11,9 @@ const CategorySection = ({ products, categoryId, title }) => {
   if (categoryProducts.length === 0) return null;
 
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <SectionDivider title={title} />
-      <div className="space-y-3">
+      <div className="space-y-2">
         {categoryProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
