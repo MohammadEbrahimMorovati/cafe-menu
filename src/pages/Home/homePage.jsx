@@ -46,7 +46,7 @@ const HomePage = () => {
           <CoffeeLogo />
 
           {/* بخش برگرهای ویژه */}
-          <FeaturedProducts products={burgerProducts} title="برگر" />
+          <FeaturedProducts products={products} title="محصولات ویژه" />
 
           {/* خط جداکننده */}
           <SectionDivider title="برگر" />
