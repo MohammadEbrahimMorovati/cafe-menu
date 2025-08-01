@@ -30,9 +30,8 @@ const HomePage = () => {
   // فیلتر کردن محصولات برگر
   const burgerProducts = getBurgerProducts(products);
 
-  // دسته‌بندی‌های موجود
+  // دسته‌بندی‌های موجود (بدون برگر چون جداگانه نمایش داده می‌شود)
   const categories = [
-    { id: CATEGORIES.BURGER, title: "برگر" },
     { id: CATEGORIES.PIZZA, title: "پیتزا" },
     { id: CATEGORIES.SANDWICH, title: "ساندویچ" },
     { id: CATEGORIES.SALAD, title: "سالاد" },
