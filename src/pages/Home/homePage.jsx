@@ -30,7 +30,7 @@ const HomePage = () => {
   // فیلتر کردن محصولات برگر
   const burgerProducts = getBurgerProducts(products);
 
-  // دسته‌بندی‌های موجود
+  // دسته‌بندی‌های موجود (بدون برگر چون جداگانه نمایش داده می‌شود)
   const categories = [
     { id: CATEGORIES.PIZZA, title: "پیتزا" },
     { id: CATEGORIES.SANDWICH, title: "ساندویچ" },
@@ -54,8 +54,8 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-[#613A27] p-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="border-4 border-dashed border-white rounded-[46px] p-6 bg-[#FBE6D3]">
+      <div className="max-w-xl mx-auto">
+        <div className="border-4 border-dashed border-white rounded-[46px] p-4 bg-[#FBE6D3]">
           {/* لوگوی قهوه */}
           <CoffeeLogo />
 
@@ -66,14 +66,14 @@ const HomePage = () => {
           <SectionDivider title="برگر" />
 
           {/* منوی تفصیلی برگرها */}
-          <div className="space-y-4 mb-8">
+          <div className="space-y-2 mb-6">
             {burgerProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
           {/* تمام محصولات بر اساس دسته‌بندی */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             {categories.map((category) => (
               <CategorySection
                 key={category.id}
