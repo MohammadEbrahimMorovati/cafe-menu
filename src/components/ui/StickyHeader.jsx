@@ -6,12 +6,11 @@ const StickyHeader = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 100); // تغییر حالت بعد از 100 پیکسل اسکرول
+      setIsScrolled(scrollTop > 100);
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    // پاک کردن event listener هنگام unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -20,9 +19,7 @@ const StickyHeader = () => {
   return (
     <div
       className={`transition-all duration-300 ease-in-out ${
-        isScrolled
-          ? "fixed top-0 left-0 right-0 z-50"
-          : "relative mb-8 pt-4"
+        isScrolled ? "fixed top-0 left-0 right-0 z-50" : "relative mb-8 pt-4"
       }`}
     >
       <div className="max-w-2xl mx-auto px-4">
@@ -40,18 +37,19 @@ const StickyHeader = () => {
               ☕
             </div>
           </div>
-          <h1
-            className={`text-[#613A27] font-bold transition-all duration-300 ease-in-out ${
-              isScrolled ? "text-sm" : "text-xl"
+          {/* متن بزرگ و با رنگ متغیر */}
+          <p
+            className={`font-bold transition-all duration-300 mt-1 ${
+              isScrolled
+                ? "text-[#613A27] text-xl opacity-100"
+                : "text-white text-2xl opacity-100"
             }`}
+            style={{
+              textShadow: !isScrolled ? "0 1px 10px rgba(0,0,0,0.20)" : "none",
+            }}
           >
-            Coffee
-          </h1>
-          {!isScrolled && (
-            <p className="text-[#613A27] text-sm opacity-70 transition-opacity duration-300">
-              logo design
-            </p>
-          )}
+            منوی رستوران مورو
+          </p>
         </div>
       </div>
     </div>
