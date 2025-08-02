@@ -7,7 +7,8 @@ import { getAllCategories } from "../../services/category/categoryService";
 import { CATEGORIES } from "../../constants";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import StickyHeader from "../../components/ui/StickyHeader";
-import FeaturedProducts from "../../components/ui/FeaturedProducts";
+// import FeaturedProducts from "../../components/ui/FeaturedProducts";
+import FeaturedCategories from "../../components/ui/FeaturedCategories";
 import SectionDivider from "../../components/ui/SectionDivider";
 import ProductCard from "../../components/ui/ProductCard";
 import CategorySection from "../../components/ui/CategorySection";
@@ -31,6 +32,17 @@ const HomePage = () => {
       });
   }, []);
 
+  // تابع اسکرول به اولین محصول هر دسته
+  const handleCategoryClick = (categoryId) => {
+    const targetProduct = products.find((p) => p.categoryId === categoryId);
+    if (targetProduct) {
+      const el = document.getElementById(`product-${targetProduct.id}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  };
+
   // فیلتر کردن محصولات برگر
   const burgerProducts = getBurgerProducts(products);
 
@@ -48,7 +60,12 @@ const HomePage = () => {
             {/* لایه داخلی با پس‌زمینه کرمی */}
             <div className="bg-[#FBE6D3] p-6 rounded-[40px]">
               {/* محصولات ویژه */}
-              <FeaturedProducts products={products} title="محصولات ویژه" />
+              {/* <FeaturedProducts products={products} title="محصولات ویژه" /> */}
+              <FeaturedCategories
+                categories={categories}
+                title="دسته‌بندی‌ها"
+                onCategoryClick={handleCategoryClick}
+              />
 
               {/* جداکننده */}
               <SectionDivider title="برگر" />
