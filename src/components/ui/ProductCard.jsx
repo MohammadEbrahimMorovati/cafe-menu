@@ -7,7 +7,7 @@ const ProductCard = ({ product, showImage = true }) => {
 
   return (
     <div
-      id={`product-${product.id}`}
+      id={`product-section-${product.id}`}
       className="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow"
     >
       <div className="flex-1">

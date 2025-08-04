@@ -7,8 +7,8 @@ import { getAllCategories } from "../../services/category/categoryService";
 import { CATEGORIES } from "../../constants";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import StickyHeader from "../../components/ui/StickyHeader";
-// import FeaturedProducts from "../../components/ui/FeaturedProducts";
 import FeaturedCategories from "../../components/ui/FeaturedCategories";
+import FeaturedProducts from "../../components/ui/FeaturedProducts";
 import SectionDivider from "../../components/ui/SectionDivider";
 import ProductCard from "../../components/ui/ProductCard";
 import CategorySection from "../../components/ui/CategorySection";
@@ -66,6 +66,9 @@ const HomePage = () => {
                 title="دسته‌بندی‌ها"
                 onCategoryClick={handleCategoryClick}
               />
+
+              {/* محصولات ویژه */}
+              <FeaturedProducts products={products} title="محصولات ویژه" />
 
               {/* جداکننده */}
               <SectionDivider title="برگر" />
