@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import api from "https://cafejsonserver.liara.run"; // آدرس به axiosت
+import api from "../api/api.js"; // آدرس به axiosت
 
 export const ThemeContext = createContext();
 
@@ -8,12 +8,10 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     api
-      .get("/theme") // فرض کنیم آدرس JSON اینه
+      .get("/theme")
       .then((res) => {
-        const data = res.data;
-        if (data.theme) {
-          setTheme(data.theme);
-        }
+        console.log("تم دریافتی از بک‌اند:", res.data);
+        setTheme(res.data); // 👈 این خط رو مستقیم بذار
       })
       .catch(() => {
         setTheme({
