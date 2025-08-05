@@ -12,8 +12,10 @@ import FeaturedProducts from "../../components/ui/FeaturedProducts";
 import SectionDivider from "../../components/ui/SectionDivider";
 import ProductCard from "../../components/ui/ProductCard";
 import CategorySection from "../../components/ui/CategorySection";
+import { useTheme } from "../../contexts/useTheme";
 
 const HomePage = () => {
+  const { theme } = useTheme();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,14 +53,20 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#613A27]">
+    <div className="min-h-screen" style={{ backgroundColor: theme.primary }}>
       <StickyHeader />
       <div className="p-4 pt-0">
         <div className="max-w-2xl mx-auto">
           {/* لایه بیرونی با بردر نقطه‌چین */}
-          <div className="border-5 border-dashed border-[#FBE6D3] rounded-[57px] p-2">
+          <div
+            className="border-5 border-dashed rounded-[57px] p-2"
+            style={{ borderColor: theme.secondary }}
+          >
             {/* لایه داخلی با پس‌زمینه کرمی */}
-            <div className="bg-[#FBE6D3] p-6 rounded-[40px]">
+            <div
+              className="p-6 rounded-[40px]"
+              style={{ backgroundColor: theme.secondary }}
+            >
               {/* محصولات ویژه */}
               {/* <FeaturedProducts products={products} title="محصولات ویژه" /> */}
               <FeaturedCategories
