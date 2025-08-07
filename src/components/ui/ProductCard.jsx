@@ -1,43 +1,55 @@
 import { calculateFinalPrice } from "../../services/products/productService";
 import { getCategoryIcon } from "../../constants";
+import { useTheme } from "../../contexts/useTheme";
 
 const ProductCard = ({ product, showImage = true }) => {
-  const hasDiscount = product.discount && product.discount > 0;
-  const finalPrice = calculateFinalPrice(product.price, product.discount);
+  const { theme } = useTheme();
+
+  const { id, name, description, price, discount = 0, categoryId } = product;
+
+  const hasDiscount = discount > 0;
+  const formattedPrice = price.toLocaleString("fa-IR");
+  const formattedFinalPrice = calculateFinalPrice(
+    price,
+    discount
+  ).toLocaleString("fa-IR");
+
+  const priceSection = hasDiscount ? (
+    <>
+      <span className="text-red-500 line-through text-sm">
+        {formattedPrice} تومان
+      </span>
+      <span className="text-green-600 font-bold">
+        {formattedFinalPrice} تومان
+      </span>
+    </>
+  ) : (
+    <span className="font-bold" style={{ color: theme.primary }}>
+      {formattedPrice} تومان
+    </span>
+  );
 
   return (
     <div
-      id={`product-section-${product.id}`}
+      id={`product-section-${id}`}
       className="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow"
     >
+      {/* متن و اطلاعات محصول */}
       <div className="flex-1">
-        <h3 className="text-[#613A27] font-bold text-lg mb-1">
-          {product.name}
+        <h3 className="font-bold text-lg mb-1" style={{ color: theme.primary }}>
+          {name}
         </h3>
-        <p className="text-[#613A27] text-sm opacity-80 mb-2">
-          {product.description}
+        <p className="text-sm opacity-80 mb-2" style={{ color: theme.primary }}>
+          {description}
         </p>
-        <div className="flex items-center gap-2">
-          {hasDiscount ? (
-            <>
-              <span className="text-red-500 line-through text-sm">
-                {product.price.toLocaleString("fa-IR")} تومان
-              </span>
-              <span className="text-green-600 font-bold">
-                {finalPrice.toLocaleString("fa-IR")} تومان
-              </span>
-            </>
-          ) : (
-            <span className="text-[#613A27] font-bold">
-              {product.price.toLocaleString("fa-IR")} تومان
-            </span>
-          )}
-        </div>
+        <div className="flex items-center gap-2">{priceSection}</div>
       </div>
+
+      {/* آیکون یا عکس */}
       {showImage && (
         <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center ml-4">
-          <span className="text-[#613A27] text-2xl">
-            {getCategoryIcon(product.categoryId)}
+          <span className="text-2xl" style={{ color: theme.primary }}>
+            {getCategoryIcon(categoryId)}
           </span>
         </div>
       )}

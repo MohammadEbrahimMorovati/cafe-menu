@@ -1,52 +1,55 @@
 import { useState, useEffect } from "react";
+import { useTheme } from "../../contexts/useTheme";
 
 const StickyHeader = () => {
+  const { theme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 100);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 100);
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // رنگ‌های استفاده شده از theme
+  const logoColor = theme.primary;
+  const logoBackground = "#ffffff";
+  const titleColor = isScrolled ? theme.primary : "#ffffff";
+  const titleShadow = isScrolled
+    ? {}
+    : { textShadow: "0 1px 10px rgba(0,0,0,0.2)" };
 
   return (
     <div
       className={`transition-all duration-300 ease-in-out ${
-        isScrolled ? "fixed top-0 left-0 right-0 z-50" : "relative mb-8 pt-4"
+        isScrolled ? "fixed top-0 left-0 right-0 z-50" : "relative pt-4 mb-8"
       }`}
     >
       <div className="max-w-2xl mx-auto px-4">
         <div className="flex flex-col items-center">
+          {/* دایره لوگو */}
           <div
-            className={`bg-white rounded-full flex items-center justify-center mb-2 transition-all duration-300 ease-in-out ${
+            className={`rounded-full flex items-center justify-center mb-2 transition-all duration-300 ${
               isScrolled ? "w-12 h-12" : "w-20 h-20"
             }`}
+            style={{ backgroundColor: logoBackground }}
           >
             <div
-              className={`text-[#613A27] transition-all duration-300 ease-in-out ${
+              className={`transition-all duration-300 ${
                 isScrolled ? "text-xl" : "text-3xl"
               }`}
+              style={{ color: logoColor }}
             >
               ☕
             </div>
           </div>
-          {/* متن بزرگ و با رنگ متغیر */}
+
+          {/* عنوان */}
           <p
-            className={`font-bold transition-all duration-300 mt-1 ${
-              isScrolled
-                ? "text-[#613A27] text-xl opacity-100"
-                : "text-white text-2xl opacity-100"
+            className={`font-bold mt-1 transition-all duration-300 ${
+              isScrolled ? "text-xl" : "text-2xl"
             }`}
-            style={{
-              textShadow: !isScrolled ? "0 1px 10px rgba(0,0,0,0.20)" : "none",
-            }}
+            style={{ color: titleColor, ...titleShadow }}
           >
             منوی رستوران مورو
           </p>

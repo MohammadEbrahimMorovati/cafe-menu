@@ -21,90 +21,68 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // دریافت همزمان محصولات و دسته‌بندی‌ها از بک‌اند
-    Promise.all([getAllProducts(), getAllCategories()])
-      .then(([productsRes, categoriesRes]) => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, categoriesRes] = await Promise.all([
+          getAllProducts(),
+          getAllCategories(),
+        ]);
         setProducts(productsRes.data);
         setCategories(categoriesRes.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
-  // تابع اسکرول به اولین محصول هر دسته
   const handleCategoryClick = (categoryId) => {
     const targetProduct = products.find((p) => p.categoryId === categoryId);
-    if (targetProduct) {
-      const el = document.getElementById(`product-${targetProduct.id}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+    const element = document.getElementById(`product-${targetProduct?.id}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
-  // فیلتر کردن محصولات برگر
-  const burgerProducts = getBurgerProducts(products);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: theme.primary }}>
       <StickyHeader />
-      <div className="p-4 pt-0">
-        <div className="max-w-2xl mx-auto">
-          {/* لایه بیرونی با بردر نقطه‌چین */}
+
+      <main className="p-4 pt-0">
+        <section
+          className="max-w-2xl mx-auto border-5 border-dashed rounded-[57px] p-2"
+          style={{ borderColor: theme.secondary }}
+        >
           <div
-            className="border-5 border-dashed rounded-[57px] p-2"
-            style={{ borderColor: theme.secondary }}
+            className="p-6 rounded-[40px]"
+            style={{ backgroundColor: theme.secondary }}
           >
-            {/* لایه داخلی با پس‌زمینه کرمی */}
-            <div
-              className="p-6 rounded-[40px]"
-              style={{ backgroundColor: theme.secondary }}
-            >
-              {/* محصولات ویژه */}
-              {/* <FeaturedProducts products={products} title="محصولات ویژه" /> */}
-              <FeaturedCategories
-                categories={categories}
-                title="دسته‌بندی‌ها"
-                onCategoryClick={handleCategoryClick}
-              />
+            <FeaturedCategories
+              categories={categories}
+              title="دسته‌بندی‌ها"
+              onCategoryClick={handleCategoryClick}
+            />
 
-              {/* محصولات ویژه */}
-              <FeaturedProducts products={products} title="محصولات ویژه" />
+            <FeaturedProducts products={products} title="محصولات ویژه" />
 
-              {/* جداکننده */}
-              <SectionDivider title="برگر" />
-
-              {/* محصولات برگر */}
-              <div className="space-y-4 mb-8">
-                {burgerProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-
-              {/* سایر دسته‌بندی‌ها */}
-              <div className="space-y-6">
-                {categories
-                  .filter((category) => category.id !== CATEGORIES.BURGER)
-                  .map((category) => (
-                    <CategorySection
-                      key={category.id}
-                      products={products}
-                      categoryId={category.id}
-                      title={category.name}
-                    />
-                  ))}
-              </div>
+            <div className="space-y-6">
+              {categories.map(({ id, name }) => (
+                <CategorySection
+                  key={id}
+                  products={products}
+                  categoryId={id}
+                  title={name}
+                />
+              ))}
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };
