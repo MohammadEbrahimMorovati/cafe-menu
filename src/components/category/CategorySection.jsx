@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProductsByCategory } from "../../services/products/productService";
-import ProductCard from "./ProductCard";
-import SectionDivider from "./SectionDivider";
+import ProductCard from "../product/ProductCard";
+import SectionDivider from "../ui/SectionDivider";
 
 const CategorySection = ({ categoryId, title }) => {
   const [categoryProducts, setCategoryProducts] = useState([]);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "../../contexts/useTheme";
+import TextType from "../ui/TextType";
 
 const StickyHeader = () => {
   const { theme } = useTheme();
@@ -11,13 +12,13 @@ const StickyHeader = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // رنگ‌های استفاده شده از theme
   const logoColor = theme.primary;
   const logoBackground = "#ffffff";
-  const titleColor = isScrolled ? theme.primary : "#ffffff";
   const titleShadow = isScrolled
     ? {}
     : { textShadow: "0 1px 10px rgba(0,0,0,0.2)" };
+
+  const textColor = isScrolled ? theme.primary : "#ffffff";
 
   return (
     <div
@@ -44,15 +45,23 @@ const StickyHeader = () => {
             </div>
           </div>
 
-          {/* عنوان */}
-          <p
+          {/* متن با انیمیشن تایپ */}
+          <TextType
+            text={[
+              "منوی رستوران مورو",
+              "برای سفارش کلیک کنید",
+              "تجربه‌ای متفاوت با مورو",
+            ]}
+            typingSpeed={80}
+            pauseDuration={2000}
+            showCursor={true}
+            cursorCharacter="|"
             className={`font-bold mt-1 transition-all duration-300 ${
               isScrolled ? "text-xl" : "text-2xl"
             }`}
-            style={{ color: titleColor, ...titleShadow }}
-          >
-            منوی رستوران مورو
-          </p>
+            textColors={[textColor]} // ← رنگ داینامیک
+            style={titleShadow}
+          />
         </div>
       </div>
     </div>

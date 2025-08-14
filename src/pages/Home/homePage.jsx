@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
-import {
-  getAllProducts,
-  getBurgerProducts,
-} from "../../services/products/productService";
+import { getAllProducts } from "../../services/products/productService";
 import { getAllCategories } from "../../services/category/categoryService";
-import { CATEGORIES } from "../../constants";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
-import StickyHeader from "../../components/ui/StickyHeader";
-import FeaturedCategories from "../../components/ui/FeaturedCategories";
-import FeaturedProducts from "../../components/ui/FeaturedProducts";
+import StickyHeader from "../../components/header/StickyHeader";
+import FeaturedCategories from "../../components/category/FeaturedCategories";
+import FeaturedProducts from "../../components/product/FeaturedProducts";
 import SectionDivider from "../../components/ui/SectionDivider";
-import ProductCard from "../../components/ui/ProductCard";
-import CategorySection from "../../components/ui/CategorySection";
+import ProductCard from "../../components/product/ProductCard";
+import CategorySection from "../../components/category/CategorySection";
 import { useTheme } from "../../contexts/useTheme";
 
 const HomePage = () => {
