@@ -1,44 +1,50 @@
-import axios from "axios";
+import axios from "axios"; // 📦 ایمپورت کتابخانه axios برای ارسال درخواست HTTP
 
-// ساخت اینستنس اصلی axios با baseURL
+// 📌 ساخت یک instance از axios با تنظیمات پیش‌فرض
 const api = axios.create({
-  baseURL: "https://cafejsonserver.liara.run", // 🔁 این رو تغییر بده
-  timeout: 10000,
+  baseURL: "https://cafejsonserver.liara.run", // 🌐 آدرس پیش‌فرض سرور (API Base URL) — قابل تغییر
+  timeout: 10000, // ⏳ حداکثر زمان انتظار برای پاسخ (10 ثانیه)
   headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json", // 📄 فرمت داده ارسالی JSON
+    "Access-Control-Allow-Origin": "*", // 🌍 اجازه دسترسی از همه دامنه‌ها (CORS)
   },
 });
 
-// افزودن توکن به هر درخواست در صورت وجود
+// 📌 اینترسپتور درخواست‌ها (Request Interceptor)
+// قبل از ارسال هر درخواست اجرا می‌شود
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // یا از context/state
+    // 🔑 گرفتن توکن از localStorage (یا می‌توان از context/state گرفت)
+    const token = localStorage.getItem("token");
     if (token) {
+      // 📌 اضافه کردن توکن به هدر Authorization اگر وجود داشته باشد
       config.headers.Authorization = `Bearer ${token}`;
     }
-    return config;
+    return config; // حتماً باید config را برگردانیم
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error) // 🚫 اگر خطایی قبل از ارسال درخواست رخ دهد
 );
 
-// مدیریت پاسخ‌ها و ارورها
+// 📌 اینترسپتور پاسخ‌ها (Response Interceptor)
+// بعد از دریافت پاسخ از سرور اجرا می‌شود
 api.interceptors.response.use(
-  (response) => response,
+  (response) => response, // ✅ اگر پاسخ بدون خطا باشد، همان را برمی‌گردانیم
   (error) => {
-    // مدیریت خطاهای رایج
+    // ❌ مدیریت خطاهای متداول
     if (error.response) {
       if (error.response.status === 401) {
         console.warn("Unauthorized! Redirect to login...");
-        // مثلاً redirect به login
+        // 📌 مثال: هدایت کاربر به صفحه ورود
       } else if (error.response.status === 500) {
         console.error("Server Error!");
       }
     }
-    return Promise.reject(error);
+    return Promise.reject(error); // 🚫 بازگرداندن خطا برای مدیریت در بخش دیگر
   }
 );
 
-export default api;
-//وقتی چیزی از سرور بگیریم Get
-//هرجا قرار بود چیزی بفرستیم Set
+export default api; // 📤 خروجی گرفتن instance برای استفاده در کل پروژه
+
+// 📌 نکته‌ها:
+// GET  => وقتی داده‌ای را از سرور می‌گیریم (Read)
+// POST/PUT/PATCH => وقتی داده‌ای را به سرور می‌فرستیم یا بروزرسانی می‌کنیم (Write)

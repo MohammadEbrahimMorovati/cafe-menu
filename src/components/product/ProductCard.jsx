@@ -1,29 +1,40 @@
-import { calculateFinalPrice } from "../../services/products/productService";
-import { getCategoryIcon } from "../../constants";
-import { useTheme } from "../../contexts/useTheme";
+import { calculateFinalPrice } from "../../services/products/productService"; 
+// 📦 تابعی برای محاسبه قیمت نهایی بعد از تخفیف
 
+import { getCategoryIcon } from "../../constants"; 
+// 🏷 گرفتن آیکون دسته‌بندی بر اساس categoryId
+
+import { useTheme } from "../../contexts/useTheme"; 
+// 🎨 گرفتن رنگ‌ها و استایل تم
+
+// 📌 کارت محصول
 const ProductCard = ({ product, showImage = true }) => {
-  const { theme } = useTheme();
+  const { theme } = useTheme(); // 🎨 دریافت رنگ‌های تم
 
+  // 📦 گرفتن جزئیات محصول از props
   const { id, name, description, price, discount = 0, categoryId } = product;
 
+  // 📌 بررسی وجود تخفیف
   const hasDiscount = discount > 0;
-  const formattedPrice = price.toLocaleString("fa-IR");
-  const formattedFinalPrice = calculateFinalPrice(
-    price,
-    discount
-  ).toLocaleString("fa-IR");
 
+  // 💲 قالب‌بندی قیمت‌ها به فرمت فارسی
+  const formattedPrice = price.toLocaleString("fa-IR");
+  const formattedFinalPrice = calculateFinalPrice(price, discount).toLocaleString("fa-IR");
+
+  // 📌 بخش نمایش قیمت (با یا بدون تخفیف)
   const priceSection = hasDiscount ? (
     <>
+      {/* قیمت قبلی خط‌خورده */}
       <span className="text-red-500 line-through text-sm">
         {formattedPrice} تومان
       </span>
+      {/* قیمت نهایی با رنگ سبز */}
       <span className="text-green-600 font-bold">
         {formattedFinalPrice} تومان
       </span>
     </>
   ) : (
+    // اگر تخفیف ندارد، فقط قیمت اصلی را نمایش بده
     <span className="font-bold" style={{ color: theme.primary }}>
       {formattedPrice} تومان
     </span>
@@ -31,10 +42,10 @@ const ProductCard = ({ product, showImage = true }) => {
 
   return (
     <div
-      id={`product-section-${id}`}
+      id={`product-section-${id}`} // شناسه یکتا برای اسکرول یا دسترسی DOM
       className="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow"
     >
-      {/* متن و اطلاعات محصول */}
+      {/* 📝 متن و اطلاعات محصول */}
       <div className="flex-1">
         <h3 className="font-bold text-lg mb-1" style={{ color: theme.primary }}>
           {name}
@@ -45,7 +56,7 @@ const ProductCard = ({ product, showImage = true }) => {
         <div className="flex items-center gap-2">{priceSection}</div>
       </div>
 
-      {/* آیکون یا عکس */}
+      {/* 🖼 آیکون دسته‌بندی یا عکس محصول */}
       {showImage && (
         <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center ml-4">
           <span className="text-2xl" style={{ color: theme.primary }}>
@@ -57,4 +68,4 @@ const ProductCard = ({ product, showImage = true }) => {
   );
 };
 
-export default ProductCard;
+export default ProductCard; // 📤 خروجی گرفتن کامپوننت برای استفاده در بخش‌های دیگر
