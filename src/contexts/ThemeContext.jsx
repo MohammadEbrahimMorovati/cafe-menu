@@ -10,7 +10,6 @@ export function ThemeProvider({ children }) {
     api
       .get("/theme")
       .then((res) => {
-        console.log("تم دریافتی از بک‌اند:", res.data);
         setTheme(res.data); // 👈 این خط رو مستقیم بذار
       })
       .catch(() => {
