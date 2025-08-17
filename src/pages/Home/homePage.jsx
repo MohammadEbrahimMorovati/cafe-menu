@@ -19,12 +19,6 @@ import FeaturedCategories from "../../components/category/FeaturedCategories";
 import FeaturedProducts from "../../components/product/FeaturedProducts";
 // 🛒 محصولات ویژه
 
-import SectionDivider from "../../components/ui/SectionDivider";
-// 📏 جداکننده سکشن‌ها (اینجا البته مستقیماً استفاده نشده)
-
-import ProductCard from "../../components/product/ProductCard";
-// 🛒 کارت محصول (اینجا مستقیم استفاده نشده چون CategorySection استفاده می‌کنه)
-
 import CategorySection from "../../components/category/CategorySection";
 // 🏷 سکشن محصولات مربوط به هر دسته
 

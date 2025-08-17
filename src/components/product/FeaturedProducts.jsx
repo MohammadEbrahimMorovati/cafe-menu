@@ -47,7 +47,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
                 {product.image ? (
                   // اگر تصویر محصول وجود دارد
                   <img
-                    src={`URL_TO_IMAGES/${product.image}`} // مسیر تصویر
+                    src={`/images/${product.image}`} // مسیر تصویر
                     alt={product.name}
                     className="w-full h-full object-contain"
                   />
