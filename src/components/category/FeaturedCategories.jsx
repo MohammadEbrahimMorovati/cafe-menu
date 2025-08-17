@@ -1,9 +1,8 @@
-import { getCategoryIcon } from "../../constants";
 import { useTheme } from "../../contexts/useTheme";
 
 const getImagePath = (image) => {
-  if (!image) return null;
-  return `/images/${image.replace(/^(\.\/|\/)?images\//, "")}`;
+  if (!image) return "/images/cat-default.jpg"; // fallback
+  return `/images/${image}`;
 };
 
 const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }) => {
@@ -38,17 +37,14 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
               style={{ minWidth: "120px", borderColor: "transparent" }}
             >
               <div className="w-16 h-16 bg-gray-100 rounded-lg mb-3 flex items-center justify-center mx-auto overflow-hidden">
-                {image ? (
-                  <img
-                    src={getImagePath(image)}
-                    alt={name}
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <span className="text-2xl" style={{ color: primaryColor }}>
-                    {getCategoryIcon(id)}
-                  </span>
-                )}
+                <img
+                  src={getImagePath(image)}
+                  alt={name}
+                  className="w-full h-full object-contain"
+                  onError={(e) =>
+                    (e.currentTarget.src = "/images/cat-default.jpg")
+                  }
+                />
               </div>
 
               <h3

@@ -1,25 +1,31 @@
-import { calculateFinalPrice } from "../../services/products/productService"; 
+import { calculateFinalPrice } from "../../services/products/productService";
 // 📦 تابعی برای محاسبه قیمت نهایی بعد از تخفیف
 
-import { getCategoryIcon } from "../../constants"; 
-// 🏷 گرفتن آیکون دسته‌بندی بر اساس categoryId
-
-import { useTheme } from "../../contexts/useTheme"; 
+import { useTheme } from "../../contexts/useTheme";
 // 🎨 گرفتن رنگ‌ها و استایل تم
+
+// 📌 تابع برای ساخت مسیر عکس از public
+const getImagePath = (image) => {
+  if (!image) return "/images/cat-default.jpg"; // fallback
+  return `/images/${image}`;
+};
 
 // 📌 کارت محصول
 const ProductCard = ({ product, showImage = true }) => {
   const { theme } = useTheme(); // 🎨 دریافت رنگ‌های تم
 
   // 📦 گرفتن جزئیات محصول از props
-  const { id, name, description, price, discount = 0, categoryId } = product;
+  const { id, name, description, price, discount = 0, image } = product;
 
   // 📌 بررسی وجود تخفیف
   const hasDiscount = discount > 0;
 
   // 💲 قالب‌بندی قیمت‌ها به فرمت فارسی
   const formattedPrice = price.toLocaleString("fa-IR");
-  const formattedFinalPrice = calculateFinalPrice(price, discount).toLocaleString("fa-IR");
+  const formattedFinalPrice = calculateFinalPrice(
+    price,
+    discount
+  ).toLocaleString("fa-IR");
 
   // 📌 بخش نمایش قیمت (با یا بدون تخفیف)
   const priceSection = hasDiscount ? (
@@ -56,12 +62,15 @@ const ProductCard = ({ product, showImage = true }) => {
         <div className="flex items-center gap-2">{priceSection}</div>
       </div>
 
-      {/* 🖼 آیکون دسته‌بندی یا عکس محصول */}
+      {/* 🖼 عکس محصول */}
       {showImage && (
-        <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center ml-4">
-          <span className="text-2xl" style={{ color: theme.primary }}>
-            {getCategoryIcon(categoryId)}
-          </span>
+        <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center ml-4 overflow-hidden">
+          <img
+            src={getImagePath(image)}
+            alt={name}
+            className="w-full h-full object-contain"
+            onError={(e) => (e.currentTarget.src = "/images/cat-default.jpg")}
+          />
         </div>
       )}
     </div>

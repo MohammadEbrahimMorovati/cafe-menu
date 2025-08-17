@@ -1,4 +1,4 @@
-import { useTheme } from "../../contexts/useTheme"; 
+import { useTheme } from "../../contexts/useTheme";
 // 🎨 هوک سفارشی برای دریافت رنگ‌ها و تنظیمات تم
 
 // 📌 کامپوننت محصولات ویژه
