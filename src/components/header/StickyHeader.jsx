@@ -11,7 +11,7 @@ const StickyHeader = () => {
 
   return (
     <div className="relative pt-4 mb-8 overflow-hidden">
-      {/* 🌊 موج متحرک پس‌زمینه */}
+      {/* 🌊 موج متحرک بالای هدر */}
       <Wave
         fill="#3b2416" // رنگ موج (قهوه‌ای تیره‌تر)
         paused={false}
@@ -21,7 +21,7 @@ const StickyHeader = () => {
           speed: 0.25, // سرعت حرکت
           points: 3, // تعداد قوس‌ها
         }}
-        className="absolute bottom-0 left-0 w-full h-32"
+        className="absolute top-0 left-0 w-full h-32 scale-y-[-1]" // 👈 برعکس و بالا
       />
 
       {/* محتوای اصلی هدر */}
