@@ -38,37 +38,40 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
           {featured.map((product) => (
             <div
               key={product.id}
-              onClick={() => scrollToProduct(product.id)} // کلیک برای اسکرول به محصول
-              className="flex-shrink-0 bg-white rounded-lg p-3 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer border border-gray-100"
-              style={{ minWidth: "140px", borderColor: primaryColor }}
+              onClick={() => scrollToProduct(product.id)}
+              className="flex-shrink-0 
+             bg-gradient-to-br from-white/70 to-white/30 
+             backdrop-blur-lg border border-white/20 
+             rounded-xl p-4 shadow-md hover:shadow-2xl 
+             hover:scale-105 transition-all duration-300 cursor-pointer"
+              style={{ minWidth: "160px" }}
             >
-              {/* 🖼 تصویر محصول یا حرف اول نام محصول */}
-              <div className="w-20 h-20 bg-gray-100 rounded-lg mb-3 flex items-center justify-center mx-auto overflow-hidden">
+              {/* تصویر محصول */}
+              <div className="w-24 h-24 bg-white/40 rounded-lg mb-3 flex items-center justify-center mx-auto overflow-hidden">
                 {product.image ? (
-                  // اگر تصویر محصول وجود دارد
                   <img
-                    src={`/images/${product.image}`} // مسیر تصویر
+                    src={`/images/${product.image}`}
                     alt={product.name}
                     className="w-full h-full object-contain"
                   />
                 ) : (
-                  // اگر تصویر وجود ندارد، حرف اول نام محصول یا ؟ نمایش داده می‌شود
-                  <span
-                    className="text-2xl font-bold"
-                    style={{ color: primaryColor }}
-                  >
+                  <span className="text-2xl font-bold text-gray-700">
                     {product.name?.[0] || "?"}
                   </span>
                 )}
               </div>
 
-              {/* 🏷 نام محصول */}
-              <h3
-                className="text-sm font-medium text-center mb-2 line-clamp-2"
-                style={{ color: primaryColor }}
-              >
+              {/* نام محصول */}
+              <h3 className="text-sm font-semibold text-center mb-1 text-gray-800 line-clamp-2">
                 {product.name}
               </h3>
+
+              {/* تگ ویژه */}
+              <div className="text-center">
+                <span className="px-2 py-1 bg-yellow-400/80 text-xs rounded-full text-white font-bold shadow">
+                  ⭐ ویژه
+                </span>
+              </div>
             </div>
           ))}
         </div>
