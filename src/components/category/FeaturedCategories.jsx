@@ -1,12 +1,4 @@
-"use client";
-
 import { useTheme } from "../../contexts/useTheme";
-import { motion } from "framer-motion";
-
-const getImagePath = (image) => {
-  if (!image) return "/images/cat-default.jpg";
-  return `/images/${image}`;
-};
 
 const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }) => {
   const { theme } = useTheme();
@@ -14,10 +6,14 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
 
   if (!categories?.length) return null;
 
+  // 📌 تابع اسکرول نرم به سکشن دسته محصول
   const scrollToCategory = (categoryId) => {
     const element = document.getElementById(`category-section-${categoryId}`);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -31,56 +27,55 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
         {title}
       </h2>
 
-      {/* 📜 دسته‌بندی‌ها */}
-      <div className="overflow-x-auto overflow-y-hidden scrollbar-hide">
-        <div className="flex gap-6 pb-4 px-2" style={{ width: "max-content" }}>
-          {categories.map(({ id, name, image }, index) => (
-            <motion.div
-              key={id}
-              onClick={() => scrollToCategory(id)}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
-              className="flex-shrink-0 cursor-pointer"
-              style={{ minWidth: "140px" }}
+      {/* 📜 لیست دسته‌بندی‌ها (اسکرول نرم iOS) */}
+      <div
+        className="overflow-x-auto scrollbar-hide px-4"
+        style={{
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch", // اینرسی iOS
+        }}
+      >
+        <div className="flex gap-6 pb-6">
+          {categories.map((cat) => (
+            <div
+              key={cat.id}
+              onClick={() => scrollToCategory(cat.id)}
+              className="flex-shrink-0 w-44 h-56 relative cursor-pointer group"
+              style={{ scrollSnapAlign: "center" }}
             >
-              <div
-                className="bg-gradient-to-br from-white/70 to-white/30 backdrop-blur-lg 
-                              border border-white/30 rounded-2xl shadow-lg hover:shadow-2xl 
-                              hover:scale-105 transition-all duration-300 p-4"
-              >
-                {/* 🖼 تصویر */}
-                <div className="w-20 h-20 rounded-full bg-white/40 border-2 flex items-center justify-center mx-auto mb-3 overflow-hidden">
-                  <img
-                    src={getImagePath(image)}
-                    alt={name}
-                    className="w-full h-full object-cover"
-                    onError={(e) =>
-                      (e.currentTarget.src = "/images/cat-default.jpg")
-                    }
-                  />
-                </div>
+              {/* تصویر دسته */}
+              <img
+                src={`/images/${cat.image}`}
+                alt={cat.name}
+                className="w-full h-full object-cover rounded-2xl shadow-xl 
+                           transition-transform duration-700 group-hover:scale-110"
+              />
 
-                {/* 🏷 نام دسته‌بندی */}
-                <h3
-                  className="text-sm font-semibold text-center line-clamp-2"
-                  style={{ color: primaryColor }}
-                >
-                  {name}
-                </h3>
+              {/* لایه گرادیان پایین */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-24 
+                              bg-gradient-to-t from-black/80 to-transparent 
+                              rounded-b-2xl"
+              ></div>
+
+              {/* نام دسته */}
+              <div className="absolute bottom-3 w-full text-center">
+                <span className="text-white font-bold text-lg drop-shadow-lg tracking-wide">
+                  {cat.name}
+                </span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* ℹ️ راهنما */}
-      <div className="flex justify-center mt-3">
-        <div className="text-xs opacity-70 px-3 py-1 rounded-full bg-gray-100/60 backdrop-blur-sm shadow-sm">
-          ← برای دیدن دسته‌بندی‌های بیشتر بکشید →
-        </div>
-      </div>
+      {/* ✨ متن راهنما */}
+      <p
+        className="text-center text-sm mt-3 opacity-70"
+        style={{ color: primaryColor }}
+      >
+        ← برای دیدن دسته‌بندی‌ها بکشید →
+      </p>
     </div>
   );
 };
