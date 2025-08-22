@@ -48,8 +48,10 @@ const ProductCard = ({ product, showImage = true }) => {
 
   return (
     <div
-      id={`product-section-${id}`} // شناسه یکتا برای اسکرول یا دسترسی DOM
-      className="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow"
+      id={`product-section-${id}`}
+      className="bg-white/60 backdrop-blur-md border border-white/30 
+             rounded-xl p-4 flex items-center justify-between 
+             shadow-md hover:shadow-lg transition-shadow"
     >
       {/* 📝 متن و اطلاعات محصول */}
       <div className="flex-1">
