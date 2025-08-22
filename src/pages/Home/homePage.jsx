@@ -72,7 +72,7 @@ const HomePage = () => {
 
       <main className="p-4 pt-0">
         <section
-          className="max-w-2xl mx-auto border-7 border-dashed rounded-[57px] p-4"
+          className="max-w-2xl mx-auto border-7 border-dashed rounded-[57px] p-2"
           style={{ borderColor: theme.secondary }}
         >
           <div
