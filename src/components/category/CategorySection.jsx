@@ -36,7 +36,7 @@ const CategorySection = ({ categoryId, title }) => {
       {/* 🏷 عنوان دسته‌بندی با خط جداکننده */}
       <SectionDivider title={title} />
       {/* 📜 لیست محصولات دسته‌بندی */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-1 items-stretch">
+      <div className="grid grid-cols-1 gap-4 items-stretch">
         {categoryProducts.map((product) => (
           <div id={`product-section-${product.id}`} key={product.id}>
             <ProductCard product={product} />
