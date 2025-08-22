@@ -12,12 +12,12 @@ const ProductCard = ({ product }) => {
   return (
     <div
       className="
-        bg-[#fffaf0] rounded-xl border border-yellow-200 shadow-sm overflow-hidden
-        flex flex-col
-        md:flex-row md:items-center md:justify-between
-      "
+    bg-[#fffaf0] rounded-xl border border-yellow-200 shadow-sm overflow-hidden
+    flex flex-col h-full   /* موبایل: پر کن تا کارت‌ها هم‌قد بشن */
+    md:flex-row md:h-auto  /* دسکتاپ: ارتفاع اتوماتیک */
+  "
     >
-      {/* تصویر بالا در موبایل - سمت راست در دسکتاپ */}
+      {/* تصویر */}
       <div className="w-full h-32 md:w-28 md:h-28 flex-shrink-0 md:order-2">
         <img
           src={`/images/${image || "cat-default.jpg"}`}
@@ -27,12 +27,14 @@ const ProductCard = ({ product }) => {
         />
       </div>
 
-      {/* متن سمت چپ */}
+      {/* متن */}
       <div className="p-3 flex flex-col flex-1 justify-between md:pr-4">
-        <h3 className="font-bold text-base mb-1 text-gray-800">{name}</h3>
-        {description && (
-          <p className="text-xs text-gray-600 mb-2">{description}</p>
-        )}
+        <div>
+          <h3 className="font-bold text-base mb-1 text-gray-800">{name}</h3>
+          {description && (
+            <p className="text-xs text-gray-600 mb-2">{description}</p>
+          )}
+        </div>
 
         {/* 💲 قیمت */}
         <div className="flex items-center gap-2 mt-auto">
@@ -56,4 +58,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard
+export default ProductCard;
