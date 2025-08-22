@@ -16,7 +16,7 @@ const SectionDivider = ({ title, icon }) => {
 
       {/* عنوان + آیکون */}
       <h2
-        className="text-xl font-extrabold flex items-center gap-2"
+        className="text-2xl font-title font-extrabold flex items-center gap-2 tracking-wide"
         style={{ color }}
       >
         {icon && <span className="text-2xl">{icon}</span>}

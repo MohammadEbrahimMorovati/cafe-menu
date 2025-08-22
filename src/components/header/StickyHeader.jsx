@@ -48,7 +48,7 @@ const StickyHeader = () => {
             pauseDuration={2000}
             showCursor={true}
             cursorCharacter="|"
-            className="font-bold mt-1 text-2xl text-white"
+            className="font-title font-extrabold mt-1 text-2xl text-white tracking-wide"
             style={{ textShadow: "0 1px 10px rgba(0,0,0,0.4)" }}
           />
         </div>

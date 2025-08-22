@@ -14,6 +14,12 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
         behavior: "smooth",
         block: "start",
       });
+
+      // ✨ افکت هایلایت کوتاه روی بخش مقصد
+      element.classList.add("ring-4", "ring-yellow-400/70");
+      setTimeout(() => {
+        element.classList.remove("ring-4", "ring-yellow-400/70");
+      }, 1200);
     }
   };
 
@@ -21,7 +27,7 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
     <div className="mb-12">
       {/* 🏷 عنوان */}
       <h2
-        className="text-2xl font-extrabold mb-6 text-center"
+        className="text-2xl font-title font-extrabold mb-6 text-center tracking-wide"
         style={{ color: primaryColor }}
       >
         {title}
@@ -47,20 +53,21 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
               <img
                 src={`/images/${cat.image}`}
                 alt={cat.name}
-                className="w-full h-full object-cover rounded-2xl shadow-xl 
+                className="w-full h-full object-cover rounded-2xl shadow-lg 
                            transition-transform duration-700 group-hover:scale-110"
               />
 
               {/* لایه گرادیان پایین */}
               <div
                 className="absolute inset-x-0 bottom-0 h-24 
-                              bg-gradient-to-t from-black/80 to-transparent 
-                              rounded-b-2xl"
+                              bg-gradient-to-t from-black/90 to-transparent 
+                              rounded-b-2xl transition-all duration-500 
+                              group-hover:from-black/95"
               ></div>
 
               {/* نام دسته */}
               <div className="absolute bottom-3 w-full text-center">
-                <span className="text-white font-bold text-lg drop-shadow-lg tracking-wide">
+                <span className="font-title text-white text-lg font-bold drop-shadow-lg tracking-wide px-2 py-1 bg-black/40 rounded-md group-hover:bg-black/70 transition">
                   {cat.name}
                 </span>
               </div>
@@ -71,7 +78,7 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
 
       {/* ✨ متن راهنما */}
       <p
-        className="text-center text-sm mt-3 opacity-70"
+        className="text-center text-sm mt-3 opacity-70 font-body"
         style={{ color: primaryColor }}
       >
         ← برای دیدن دسته‌بندی‌ها بکشید →

@@ -21,7 +21,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
     <div className="mb-8">
       {/* 🏷 عنوان بخش */}
       <h2
-        className="text-xl font-bold mb-6 text-center tracking-wide"
+        className="text-xl font-title font-extrabold mb-6 text-center tracking-wide"
         style={{ color: primaryColor }}
       >
         {title}
@@ -40,7 +40,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
               transition-all duration-300 cursor-pointer overflow-hidden"
             >
               {/* بج ویژه */}
-              <div className="absolute top-2 left-2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1 shadow">
+              <div className="absolute top-2 left-2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1 shadow font-body">
                 <Star className="w-3 h-3" /> ویژه
               </div>
 
@@ -53,7 +53,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
                     className="w-full h-full object-cover transform group-hover:scale-110 transition duration-300"
                   />
                 ) : (
-                  <span className="text-2xl font-bold text-gray-700">
+                  <span className="text-2xl font-title font-bold text-gray-700">
                     {product.name?.[0] || "?"}
                   </span>
                 )}
@@ -61,10 +61,10 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
 
               {/* اطلاعات محصول */}
               <div className="p-3 text-center">
-                <h3 className="text-base font-semibold text-yellow-700 mb-1 line-clamp-1">
+                <h3 className="text-base font-title font-bold text-yellow-700 mb-1 line-clamp-1">
                   {product.name}
                 </h3>
-                <p className="text-xs text-gray-600 line-clamp-2">
+                <p className="text-xs text-gray-600 line-clamp-2 font-body">
                   {product.description || "توضیحات محصول"}
                 </p>
               </div>
@@ -75,7 +75,10 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
 
       {/* ℹ️ متن راهنمای اسکرول */}
       <div className="flex justify-center mt-3">
-        <div className="text-xs opacity-70" style={{ color: primaryColor }}>
+        <div
+          className="text-xs opacity-70 font-body"
+          style={{ color: primaryColor }}
+        >
           ← برای دیدن محصولات بیشتر بکشید 😊 →
         </div>
       </div>

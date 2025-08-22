@@ -1,4 +1,11 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&family=Estedad:wght@500;700&display=swap');
+
+:root {
+  --font-body: "Vazirmatn", sans-serif;
+  --font-title: "Estedad", sans-serif;
+}
+
 
 /* مخفی کردن اسکرول بار */
 .scrollbar-hide {

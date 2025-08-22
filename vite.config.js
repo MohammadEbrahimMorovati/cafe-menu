@@ -5,4 +5,14 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  tailwind: {
+    theme: {
+      extend: {
+        fontFamily: {
+          body: "var(--font-body)",
+          title: "var(--font-title)",
+        },
+      },
+    },
+  },
 });

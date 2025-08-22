@@ -1,3 +1,5 @@
+import { calculateFinalPrice } from "../../services/products/productService"; // 📦 اضافه کن
+
 const ProductCard = ({ product }) => {
   if (!product) return null;
 
@@ -5,9 +7,10 @@ const ProductCard = ({ product }) => {
 
   const hasDiscount = discount > 0;
   const formattedPrice = Number(price).toLocaleString("fa-IR");
-  const formattedFinalPrice = (price - (price * discount) / 100).toLocaleString(
-    "fa-IR"
-  );
+  const formattedFinalPrice = calculateFinalPrice(
+    price,
+    discount
+  ).toLocaleString("fa-IR");
 
   return (
     <div className="relative rounded-xl overflow-hidden shadow-md group">
@@ -24,13 +27,15 @@ const ProductCard = ({ product }) => {
 
       {/* اطلاعات محصول */}
       <div className="absolute bottom-0 left-0 right-0 z-10 p-3 text-white">
-        <h3 className="font-bold text-lg mb-1">{name}</h3>
+        <h3 className="font-title font-bold text-lg mb-1">{name}</h3>
         {description && (
-          <p className="text-sm opacity-90 mb-2 line-clamp-2">{description}</p>
+          <p className="font-body text-sm opacity-90 mb-2 line-clamp-2">
+            {description}
+          </p>
         )}
 
         {/* 💲 قیمت */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 font-body">
           {hasDiscount ? (
             <>
               <span className="text-red-300 line-through text-sm">
