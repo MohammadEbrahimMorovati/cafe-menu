@@ -38,7 +38,9 @@ const CategorySection = ({ categoryId, title }) => {
       {/* 📜 لیست محصولات دسته‌بندی */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-1" dir="rtl">
         {categoryProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <div id={`product-section-${product.id}`} key={product.id}>
+            <ProductCard product={product} />
+          </div>
         ))}
       </div>
     </div>
