@@ -32,7 +32,7 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
       </h2>
 
       {/* 📜 دسته‌بندی‌ها */}
-      <div className="overflow-x-auto scrollbar-hide">
+      <div className="overflow-x-auto overflow-y-hidden scrollbar-hide">
         <div className="flex gap-6 pb-4 px-2" style={{ width: "max-content" }}>
           {categories.map(({ id, name, image }, index) => (
             <motion.div
@@ -45,9 +45,11 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
               className="flex-shrink-0 cursor-pointer"
               style={{ minWidth: "140px" }}
             >
-              <div className="bg-gradient-to-br from-white/70 to-white/30 backdrop-blur-lg 
+              <div
+                className="bg-gradient-to-br from-white/70 to-white/30 backdrop-blur-lg 
                               border border-white/30 rounded-2xl shadow-lg hover:shadow-2xl 
-                              hover:scale-105 transition-all duration-300 p-4">
+                              hover:scale-105 transition-all duration-300 p-4"
+              >
                 {/* 🖼 تصویر */}
                 <div className="w-20 h-20 rounded-full bg-white/40 border-2 flex items-center justify-center mx-auto mb-3 overflow-hidden">
                   <img
