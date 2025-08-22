@@ -1,72 +1,61 @@
 import { calculateFinalPrice } from "../../services/products/productService";
-// 📦 تابعی برای محاسبه قیمت نهایی بعد از تخفیف
-
 import { useTheme } from "../../contexts/useTheme";
-// 🎨 گرفتن رنگ‌ها و استایل تم
 
-// 📌 تابع برای ساخت مسیر عکس از public
 const getImagePath = (image) => {
-  if (!image) return "/images/cat-default.jpg"; // fallback
+  if (!image) return "/images/cat-default.jpg";
   return `/images/${image}`;
 };
 
-// 📌 کارت محصول
 const ProductCard = ({ product, showImage = true }) => {
-  const { theme } = useTheme(); // 🎨 دریافت رنگ‌های تم
-
-  // 📦 گرفتن جزئیات محصول از props
+  const { theme } = useTheme();
   const { id, name, description, price, discount = 0, image } = product;
 
-  // 📌 بررسی وجود تخفیف
   const hasDiscount = discount > 0;
-
-  // 💲 قالب‌بندی قیمت‌ها به فرمت فارسی
   const formattedPrice = price.toLocaleString("fa-IR");
   const formattedFinalPrice = calculateFinalPrice(
     price,
     discount
   ).toLocaleString("fa-IR");
 
-  // 📌 بخش نمایش قیمت (با یا بدون تخفیف)
-  const priceSection = hasDiscount ? (
-    <>
-      {/* قیمت قبلی خط‌خورده */}
-      <span className="text-red-500 line-through text-sm">
-        {formattedPrice} تومان
-      </span>
-      {/* قیمت نهایی با رنگ سبز */}
-      <span className="text-green-600 font-bold">
-        {formattedFinalPrice} تومان
-      </span>
-    </>
-  ) : (
-    // اگر تخفیف ندارد، فقط قیمت اصلی را نمایش بده
-    <span className="font-bold" style={{ color: theme.primary }}>
-      {formattedPrice} تومان
-    </span>
-  );
-
   return (
     <div
       id={`product-section-${id}`}
-      className="bg-white/60 backdrop-blur-md border border-white/30 
-             rounded-xl p-4 flex items-center justify-between 
-             shadow-md hover:shadow-lg transition-shadow"
+      className="bg-[#fffaf0]/90 backdrop-blur-sm border border-yellow-400/30 
+                 rounded-xl p-4 flex items-center justify-between 
+                 shadow-[0_2px_8px_rgba(255,215,0,0.2)] transition-shadow"
     >
-      {/* 📝 متن و اطلاعات محصول */}
+      {/* 📝 متن محصول */}
       <div className="flex-1">
-        <h3 className="font-bold text-lg mb-1" style={{ color: theme.primary }}>
+        <h3
+          className="font-bold text-base mb-1"
+          style={{ color: theme.primary || "#b8860b" }} // طلایی پیشفرض
+        >
           {name}
         </h3>
-        <p className="text-sm opacity-80 mb-2" style={{ color: theme.primary }}>
-          {description}
-        </p>
-        <div className="flex items-center gap-2">{priceSection}</div>
+        <p className="text-xs text-gray-600 mb-2">{description}</p>
+
+        {/* 💲 قیمت */}
+        <div className="flex items-center gap-2">
+          {hasDiscount ? (
+            <>
+              <span className="text-red-500 line-through text-xs">
+                {formattedPrice} تومان
+              </span>
+              <span className="px-2 py-0.5 bg-green-600/90 text-white rounded-full text-xs font-bold shadow-sm">
+                {formattedFinalPrice} تومان
+              </span>
+            </>
+          ) : (
+            <span className="px-2 py-0.5 bg-yellow-500/90 text-white rounded-full text-xs font-bold shadow-sm">
+              {formattedPrice} تومان
+            </span>
+          )}
+        </div>
       </div>
 
-      {/* 🖼 عکس محصول */}
+      {/* 🖼 تصویر */}
       {showImage && (
-        <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center ml-4 overflow-hidden">
+        <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center ml-4 overflow-hidden shadow-inner border border-yellow-400/20">
           <img
             src={getImagePath(image)}
             alt={name}
@@ -79,4 +68,4 @@ const ProductCard = ({ product, showImage = true }) => {
   );
 };
 
-export default ProductCard; // 📤 خروجی گرفتن کامپوننت برای استفاده در بخش‌های دیگر
+export default ProductCard;
