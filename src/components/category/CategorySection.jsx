@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 // 📦 ایمپورت هوک‌های React برای مدیریت state و lifecycle
 
-import { getProductsByCategory } from "../../services/products/productService"; 
+import { getProductsByCategory } from "../../services/products/productService";
 // 📌 تابعی برای گرفتن لیست محصولات یک دسته‌بندی مشخص از سرویس محصولات
 
-import ProductCard from "../product/ProductCard"; 
+import ProductCard from "../product/ProductCard";
 // 🛒 کامپوننت نمایش کارت محصول
 
-import SectionDivider from "../ui/SectionDivider"; 
+import SectionDivider from "../ui/SectionDivider";
 // 📏 کامپوننت جداکننده سکشن‌ها (عنوان و خط جداکننده)
 
 // 📌 کامپوننتی برای نمایش لیست محصولات یک دسته‌بندی مشخص
@@ -35,13 +35,10 @@ const CategorySection = ({ categoryId, title }) => {
     <div id={`category-section-${categoryId}`} className="mb-3">
       {/* 🏷 عنوان دسته‌بندی با خط جداکننده */}
       <SectionDivider title={title} />
-
       {/* 📜 لیست محصولات دسته‌بندی */}
-      <div className="space-y-2">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-1" dir="rtl">
         {categoryProducts.map((product) => (
-          <div id={`product-${product.id}`} key={product.id}>
-            <ProductCard product={product} /> {/* نمایش کارت هر محصول */}
-          </div>
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>
