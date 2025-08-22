@@ -1,24 +1,29 @@
 import { useTheme } from "../../contexts/useTheme";
-// 🎨 هوک سفارشی برای گرفتن رنگ‌های فعلی تم
 
-// 📌 کامپوننت جداکننده سکشن‌ها با عنوان
-// props: title => عنوان سکشن
-const SectionDivider = ({ title }) => {
-  const { theme } = useTheme(); // 🎨 گرفتن رنگ‌ها از تم
-  const color = theme.primary; // رنگ اصلی برای خط و متن
+const SectionDivider = ({ title, icon }) => {
+  const { theme } = useTheme();
+  const color = theme.primary || "#b8860b";
 
   return (
-    <div
-      className="border-t-2 border-dashed mb-2"
-      // 📏 خط بالایی (border top) با استایل خط‌چین
-      style={{ borderColor: color }}
-    >
-      {/* 🏷 عنوان سکشن در مرکز */}
-      <h2 className="text-center text-base font-bold mt-1" style={{ color }}>
+    <div className="flex items-center justify-end mb-6">
+      {/* خط جداکننده گرادینتی (سمت چپ) */}
+      <div
+        className="flex-1 h-px mr-4"
+        style={{
+          background: `linear-gradient(to left, ${color}, transparent)`,
+        }}
+      ></div>
+
+      {/* عنوان + آیکون */}
+      <h2
+        className="text-xl font-extrabold flex items-center gap-2"
+        style={{ color }}
+      >
+        {icon && <span className="text-2xl">{icon}</span>}
         {title}
       </h2>
     </div>
   );
 };
 
-export default SectionDivider; // 📤 خروجی گرفتن کامپوننت برای استفاده در بخش‌های دیگر
+export default SectionDivider;
