@@ -1,23 +1,54 @@
+import { useEffect, useMemo, useState } from "react";
+import { Heart } from "lucide-react";
+import { useCart } from "../../contexts/CartContext";
 import { calculateFinalPrice } from "../../services/products/productService";
-import { useCart } from "../../contexts/CartContext"; // 🛒 اضافه شد
+
+const FAV_KEY = "favorite_ids";
+
+// --- LS helpers (Set for O(1) membership) ---
+const readFavs = () =>
+  new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+const writeFavs = (set) =>
+  localStorage.setItem(FAV_KEY, JSON.stringify([...set]));
 
 const ProductCard = ({ product }) => {
-  const { addToCart } = useCart(); // 🛒 استفاده از Context
-
+  const { addToCart } = useCart();
   if (!product) return null;
 
   const { id, name, description, price, discount = 0, image } = product;
 
   const hasDiscount = discount > 0;
-  const formattedPrice = Number(price).toLocaleString("fa-IR");
-  const formattedFinalPrice = calculateFinalPrice(
-    price,
-    discount
-  ).toLocaleString("fa-IR");
+
+  // قیمت‌ها فقط وقتی price/discount عوض شود محاسبه/فرمت می‌شوند
+  const finalPrice = useMemo(
+    () => (hasDiscount ? calculateFinalPrice(price, discount) : price),
+    [price, discount, hasDiscount]
+  );
+  const formattedPrice = useMemo(
+    () => Number(price).toLocaleString("fa-IR"),
+    [price]
+  );
+  const formattedFinalPrice = useMemo(
+    () => Number(finalPrice).toLocaleString("fa-IR"),
+    [finalPrice]
+  );
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    setIsFavorite(readFavs().has(id));
+  }, [id]);
+
+  const toggleFavorite = () => {
+    const favs = readFavs();
+    favs.has(id) ? favs.delete(id) : favs.add(id);
+    writeFavs(favs);
+    setIsFavorite(favs.has(id));
+  };
 
   return (
-    <div className="relative rounded-xl overflow-hidden shadow-md group">
-      {/* تصویر محصول */}
+    <div className="relative rounded-xl overflow-hidden shadow-md group" dir="rtl">
+      {/* تصویر */}
       <img
         src={`/images/${image || "cat-default.jpg"}`}
         alt={name}
@@ -25,12 +56,32 @@ const ProductCard = ({ product }) => {
         onError={(e) => (e.currentTarget.src = "/images/cat-default.jpg")}
       />
 
-      {/* لایه گرادیان پشت متن */}
-      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/90 via-black/70 to-transparent"></div>
+      {/* ❤️ علاقه‌مندی */}
+      <button
+        onClick={toggleFavorite}
+        aria-label={
+          isFavorite ? "حذف از علاقه‌مندی‌ها" : "افزودن به علاقه‌مندی‌ها"
+        }
+        className="absolute top-2 right-2 z-20 p-2 rounded-full bg-white/85 backdrop-blur shadow hover:bg-white transition"
+      >
+        <Heart
+          size={20}
+          className={`${
+            isFavorite
+              ? "text-red-500 fill-red-500 scale-110"
+              : "text-gray-400 scale-100"
+          } 
+    transition-transform duration-200`}
+        />
+      </button>
 
-      {/* اطلاعات محصول */}
+      {/* گرادیان و اطلاعات */}
+      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/90 via-black/70 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 z-10 p-3 text-white">
-        <h3 className="font-title font-bold text-lg mb-1">{name}</h3>
+        <h3 className="font-title tracking-tight font-extrabold text-lg mb-1">
+          {name}
+        </h3>
+
         {description && (
           <p className="font-body text-sm opacity-90 mb-2 line-clamp-2">
             {description}
@@ -55,17 +106,16 @@ const ProductCard = ({ product }) => {
           )}
         </div>
 
-        {/* 🛒 دکمه افزودن به سبد خرید */}
+        {/* 🛒 افزودن به سبد */}
         <button
-          onClick={() =>
-            addToCart({
-              id,
-              name,
-              price: hasDiscount ? calculateFinalPrice(price, discount) : price,
-              qty: 1,
-            })
-          }
-          className="w-full bg-yellow-500 text-brown-900 font-bold py-1.5 rounded-lg hover:bg-yellow-400 transition"
+          onClick={() => {
+            addToCart({ id, name, price: finalPrice, qty: 1 });
+            // 📱 لرزش کوتاه روی موبایل
+            if (navigator.vibrate) navigator.vibrate(15);
+          }}
+          className="w-full bg-yellow-500 text-brown-900 font-bold py-1.5 rounded-lg 
+             hover:bg-yellow-400 active:scale-95 transition-transform duration-150 
+             shadow-md hover:shadow-lg"
         >
           افزودن به سبد خرید
         </button>

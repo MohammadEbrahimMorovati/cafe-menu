@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { X, Trash2 } from "lucide-react"; // 🗑 آیکون حذف
+import { X, Trash2, Plus, Minus } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 
 export default function CartDrawer() {
-  const { cartItems, removeFromCart } = useCart(); // 🛒 گرفتن removeFromCart
+  const { cartItems, removeFromCart, increaseQty, decreaseQty } = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -59,11 +59,29 @@ export default function CartDrawer() {
                 <div>
                   <h3 className="font-semibold text-brown-800">{item.name}</h3>
                   <p className="text-sm text-brown-600">
-                    {item.qty} × {item.price.toLocaleString("fa-IR")} تومان
+                    {item.price.toLocaleString("fa-IR")} تومان
                   </p>
+
+                  {/* کنترل تعداد */}
+                  <div className="flex items-center gap-2 mt-2">
+                    <button
+                      onClick={() => decreaseQty(item.id)}
+                      className="p-1 rounded-full bg-gray-200 hover:bg-gray-300"
+                    >
+                      <Minus className="w-4 h-4 text-brown-700" />
+                    </button>
+                    <span className="px-2 font-bold">{item.qty}</span>
+                    <button
+                      onClick={() => increaseQty(item.id)}
+                      className="p-1 rounded-full bg-gray-200 hover:bg-gray-300"
+                    >
+                      <Plus className="w-4 h-4 text-brown-700" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                {/* قیمت کل + حذف */}
+                <div className="flex flex-col items-end gap-2">
                   <span className="text-brown-900 font-bold text-sm">
                     {(item.qty * item.price).toLocaleString("fa-IR")} تومان
                   </span>

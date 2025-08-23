@@ -24,9 +24,23 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => setCartItems([]);
 
+  const increaseQty = (id) => {
+    setCartItems((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, qty: p.qty + 1 } : p))
+    );
+  };
+
+  const decreaseQty = (id) => {
+    setCartItems((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, qty: p.qty > 1 ? p.qty - 1 : 1 } : p
+      )
+    );
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart }}
+      value={{ cartItems, addToCart, removeFromCart, clearCart, increaseQty, decreaseQty }}
     >
       {children}
     </CartContext.Provider>
@@ -38,3 +52,4 @@ export const useCart = () => {
   if (!context) throw new Error("useCart must be used inside CartProvider");
   return context;
 };
+  
