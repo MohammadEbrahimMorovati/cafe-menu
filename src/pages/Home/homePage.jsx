@@ -24,6 +24,7 @@ import CategorySection from "../../components/category/CategorySection";
 
 import { useTheme } from "../../contexts/useTheme";
 // 🎨 استفاده از تم داینامیک
+import CartDrawer from "../../components/cart/CartDrawer";
 
 // 📌 صفحه اصلی
 const HomePage = () => {
@@ -103,6 +104,7 @@ const HomePage = () => {
           </div>
         </section>
       </main>
+      <CartDrawer />
     </div>
   );
 };

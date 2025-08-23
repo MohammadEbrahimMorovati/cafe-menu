@@ -1,9 +1,12 @@
-import { calculateFinalPrice } from "../../services/products/productService"; // 📦 اضافه کن
+import { calculateFinalPrice } from "../../services/products/productService";
+import { useCart } from "../../contexts/CartContext"; // 🛒 اضافه شد
 
 const ProductCard = ({ product }) => {
+  const { addToCart } = useCart(); // 🛒 استفاده از Context
+
   if (!product) return null;
 
-  const { name, description, price, discount = 0, image } = product;
+  const { id, name, description, price, discount = 0, image } = product;
 
   const hasDiscount = discount > 0;
   const formattedPrice = Number(price).toLocaleString("fa-IR");
@@ -22,7 +25,7 @@ const ProductCard = ({ product }) => {
         onError={(e) => (e.currentTarget.src = "/images/cat-default.jpg")}
       />
 
-      {/* لایه گرادیان قوی‌تر پشت متن */}
+      {/* لایه گرادیان پشت متن */}
       <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/90 via-black/70 to-transparent"></div>
 
       {/* اطلاعات محصول */}
@@ -35,7 +38,7 @@ const ProductCard = ({ product }) => {
         )}
 
         {/* 💲 قیمت */}
-        <div className="flex items-center gap-2 font-body">
+        <div className="flex items-center gap-2 font-body mb-2">
           {hasDiscount ? (
             <>
               <span className="text-red-300 line-through text-sm">
@@ -51,6 +54,21 @@ const ProductCard = ({ product }) => {
             </span>
           )}
         </div>
+
+        {/* 🛒 دکمه افزودن به سبد خرید */}
+        <button
+          onClick={() =>
+            addToCart({
+              id,
+              name,
+              price: hasDiscount ? calculateFinalPrice(price, discount) : price,
+              qty: 1,
+            })
+          }
+          className="w-full bg-yellow-500 text-brown-900 font-bold py-1.5 rounded-lg hover:bg-yellow-400 transition"
+        >
+          افزودن به سبد خرید
+        </button>
       </div>
     </div>
   );
