@@ -59,7 +59,7 @@ const ProductCard = ({ product }) => {
       >
         {/* تصویر */}
         <img
-          src={`/images/${image || "cat-default.jpg"}`}
+          src={`${image || "cat-default.jpg"}`}
           alt={name}
           className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
           onError={(e) => (e.currentTarget.src = "/images/cat-default.jpg")}

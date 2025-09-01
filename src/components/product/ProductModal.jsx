@@ -20,7 +20,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
 
         {/* عکس */}
         <img
-          src={`/images/${image || "cat-default.jpg"}`}
+          src={`${image || "cat-default.jpg"}`}
           alt={name}
           className="w-full h-60 object-cover"
         />

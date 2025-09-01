@@ -22,7 +22,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
       {/* 🏷 عنوان بخش */}
       <h2
         className="text-xl font-title font-extrabold mb-6 text-center tracking-wide"
-        style={{ color: theme.primary }}
+        style={{ color: theme.primary_color }}
       >
         {title}
       </h2>
@@ -56,11 +56,11 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
               {/* تصویر محصول */}
               <div
                 className="w-full h-32 flex items-center justify-center overflow-hidden"
-                style={{ backgroundColor: theme.secondary }}
+                style={{ backgroundColor: theme.secondary_color }}
               >
                 {product.image ? (
                   <img
-                    src={`/images/${product.image}`}
+                    src={`${product.image}`}
                     alt={product.name}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition duration-300"
                   />
@@ -98,7 +98,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
       <div className="flex justify-center mt-3">
         <div
           className="text-xs opacity-70 font-body"
-          style={{ color: theme.primary }}
+          style={{ color: theme.primary_color }}
         >
           ← برای دیدن محصولات بیشتر بکشید 😊 →
         </div>

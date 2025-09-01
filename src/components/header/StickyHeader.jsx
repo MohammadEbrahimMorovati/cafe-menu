@@ -6,14 +6,14 @@ const StickyHeader = () => {
   const { theme } = useTheme();
 
   // 🎨 رنگ‌ها
-  const logoColor = theme.primary;
+  const logoColor = theme.primary_color;
   const logoBackground = "#ffffff";
 
   return (
     <div className="relative pt-4 mb-8 overflow-hidden">
       {/* 🌊 موج متحرک بالای هدر */}
       <Wave
-        fill="#3b2416" // رنگ موج (قهوه‌ای تیره‌تر)
+        fill= {theme.secondary_color} // رنگ موج (قهوه‌ای تیره‌تر)
         paused={false}
         options={{
           height: 40, // ارتفاع موج

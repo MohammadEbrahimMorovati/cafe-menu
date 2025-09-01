@@ -8,7 +8,7 @@
   {/* تصویر */}
   <div className="w-full h-32 md:w-28 md:h-28 flex-shrink-0 md:order-2">
     <img
-      src={`/images/${image || "cat-default.jpg"}`}
+      src={`${image || "cat-default.jpg"}`}
       alt={name}
       className="w-full h-full object-cover"
       onError={(e) => (e.currentTarget.src = "/images/cat-default.jpg")}

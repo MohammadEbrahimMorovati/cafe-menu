@@ -22,7 +22,7 @@ const CategorySection = ({ categoryId, title }) => {
     setLoading(true); // شروع لودینگ
     getProductsByCategory(categoryId) // درخواست گرفتن محصولات دسته
       .then((res) => {
-        setCategoryProducts(res.data); // ذخیره محصولات دریافتی
+        setCategoryProducts(res.data.results); // ذخیره محصولات دریافتی
         setLoading(false); // پایان لودینگ
       })
       .catch(() => setLoading(false)); // در صورت خطا، لودینگ متوقف می‌شود

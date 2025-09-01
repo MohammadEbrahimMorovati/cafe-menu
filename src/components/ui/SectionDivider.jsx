@@ -2,7 +2,7 @@ import { useTheme } from "../../contexts/useTheme";
 
 const SectionDivider = ({ title, icon }) => {
   const { theme } = useTheme();
-  const color = theme.primary || "#b8860b";
+  const color = theme.primary_color || "#b8860b";
 
   return (
     <div className="flex items-center justify-end mb-6">

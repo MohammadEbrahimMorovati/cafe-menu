@@ -2,7 +2,7 @@ import { useTheme } from "../../contexts/useTheme";
 
 const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }) => {
   const { theme } = useTheme();
-  const primaryColor = theme.primary;
+  const primaryColor = theme.primary_color;
 
   if (!categories?.length) return null;
 
@@ -51,7 +51,7 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
             >
               {/* تصویر دسته */}
               <img
-                src={`/images/${cat.image}`}
+                src={`${cat.image}`}
                 alt={cat.name}
                 className="w-full h-full object-cover rounded-2xl shadow-lg 
                            transition-transform duration-700 group-hover:scale-110"

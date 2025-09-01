@@ -29,7 +29,7 @@ const ProductCard = ({ product, showImage = true }) => {
       <div className="flex-1">
         <h3
           className="font-bold text-base mb-1"
-          style={{ color: theme.primary || "#b8860b" }} // طلایی پیشفرض
+          style={{ color: theme.primary_color || "#b8860b" }} // طلایی پیشفرض
         >
           {name}
         </h3>

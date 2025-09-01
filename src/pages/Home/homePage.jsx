@@ -42,8 +42,8 @@ const HomePage = () => {
           getAllProducts(),
           getAllCategories(),
         ]);
-        setProducts(productsRes.data); // ذخیره محصولات
-        setCategories(categoriesRes.data); // ذخیره دسته‌بندی‌ها
+        setProducts(productsRes.data.results); // ذخیره محصولات
+        setCategories(categoriesRes.data.results); // ذخیره دسته‌بندی‌ها
       } catch (error) {
         console.error("Error fetching data:", error); // ثبت خطا
       } finally {
@@ -67,18 +67,18 @@ const HomePage = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: theme.primary }}>
+    <div className="min-h-screen" style={{ backgroundColor: theme.primary_color }}>
       {/* 📌 هدر چسبان */}
       <StickyHeader />
 
       <main className="p-4 pt-0">
         <section
           className="max-w-2xl mx-auto border-7 border-dashed rounded-[57px] p-2"
-          style={{ borderColor: theme.secondary }}
+          style={{ borderColor: theme.secondary_color }}
         >
           <div
             className="p-6 rounded-[40px]"
-            style={{ backgroundColor: theme.secondary }}
+            style={{ backgroundColor: theme.secondary_color }}
           >
             {/* 🏷 دسته‌بندی‌ها */}
             <FeaturedCategories

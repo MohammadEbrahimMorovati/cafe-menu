@@ -7,8 +7,8 @@ const LoadingSpinner = ({ message = "در حال بارگذاری..." }) => {
   const { theme } = useTheme(); // 🎨 دریافت رنگ‌ها از تم
 
   // 🎨 رنگ پس‌زمینه و رنگ متن/بوردر بر اساس تم
-  const backgroundColor = theme.primary || "#613A27"; // رنگ اصلی (fallback قهوه‌ای)
-  const textColor = theme.secondary || "#FBE6D3"; // رنگ دوم (fallback بژ)
+  const backgroundColor = theme.primary_color || "#613A27"; // رنگ اصلی (fallback قهوه‌ای)
+  const textColor = theme.secondary_color || "#FBE6D3"; // رنگ دوم (fallback بژ)
 
   return (
     <div
