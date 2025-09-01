@@ -1,12 +1,12 @@
 // رنگ‌های پروژه
-export const COLORS = {
-  PRIMARY: "#613A27",
-  SECONDARY: "#FBE6D3",
-  WHITE: "#FFFFFF",
-  RED: "#EF4444",
-  GREEN: "#10B981",
-  GRAY: "#6B7280",
-};
+// export const COLORS = {
+//   PRIMARY: "#613A27",
+//   SECONDARY: "#FBE6D3",
+//   WHITE: "#FFFFFF",
+//   RED: "#EF4444",
+//   GREEN: "#10B981",
+//   GRAY: "#6B7280",
+// };
 
 // تنظیمات API
 export const API_CONFIG = {

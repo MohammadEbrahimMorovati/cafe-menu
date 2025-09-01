@@ -1,3 +1,4 @@
+"use client";
 import { useTheme } from "../../contexts/useTheme";
 import { Star } from "lucide-react"; // 📦 آیکون ستاره برای بج ویژه
 
@@ -15,14 +16,13 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
   };
 
   const featured = products.slice(0, 5);
-  const primaryColor = theme.primary;
 
   return (
     <div className="mb-8">
       {/* 🏷 عنوان بخش */}
       <h2
         className="text-xl font-title font-extrabold mb-6 text-center tracking-wide"
-        style={{ color: primaryColor }}
+        style={{ color: theme.primary }}
       >
         {title}
       </h2>
@@ -35,17 +35,29 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
               key={product.id}
               onClick={() => scrollToProduct(product.id)}
               className="relative flex-shrink-0 w-48 rounded-2xl 
-              backdrop-blur-md bg-white/20 border-2 border-yellow-400/60
-              shadow-lg hover:shadow-2xl hover:scale-105 
-              transition-all duration-300 cursor-pointer overflow-hidden"
+                         backdrop-blur-md shadow-lg hover:shadow-2xl hover:scale-105 
+                         transition-all duration-300 cursor-pointer overflow-hidden"
+              style={{
+                border: `2px solid ${theme.borderColor}`,
+                backgroundColor: theme.cardBg,
+              }}
             >
               {/* بج ویژه */}
-              <div className="absolute top-2 left-2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1 shadow font-body">
+              <div
+                className="absolute top-2 left-2 text-xs px-2 py-1 rounded-full flex items-center gap-1 shadow font-body"
+                style={{
+                  backgroundColor: theme.featuredBadgeBg,
+                  color: theme.featuredBadgeText,
+                }}
+              >
                 <Star className="w-3 h-3" /> ویژه
               </div>
 
               {/* تصویر محصول */}
-              <div className="w-full h-32 bg-white/40 flex items-center justify-center overflow-hidden">
+              <div
+                className="w-full h-32 flex items-center justify-center overflow-hidden"
+                style={{ backgroundColor: theme.secondary }}
+              >
                 {product.image ? (
                   <img
                     src={`/images/${product.image}`}
@@ -53,7 +65,10 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
                     className="w-full h-full object-cover transform group-hover:scale-110 transition duration-300"
                   />
                 ) : (
-                  <span className="text-2xl font-title font-bold text-gray-700">
+                  <span
+                    className="text-2xl font-title font-bold"
+                    style={{ color: theme.textPrimary }}
+                  >
                     {product.name?.[0] || "?"}
                   </span>
                 )}
@@ -61,10 +76,16 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
 
               {/* اطلاعات محصول */}
               <div className="p-3 text-center">
-                <h3 className="text-base font-title font-bold text-yellow-700 mb-1 line-clamp-1">
+                <h3
+                  className="text-base font-title font-bold mb-1 line-clamp-1"
+                  style={{ color: theme.productTitle }}
+                >
                   {product.name}
                 </h3>
-                <p className="text-xs text-gray-600 line-clamp-2 font-body">
+                <p
+                  className="text-xs line-clamp-2 font-body"
+                  style={{ color: theme.productDescription }}
+                >
                   {product.description || "توضیحات محصول"}
                 </p>
               </div>
@@ -77,7 +98,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
       <div className="flex justify-center mt-3">
         <div
           className="text-xs opacity-70 font-body"
-          style={{ color: primaryColor }}
+          style={{ color: theme.primary }}
         >
           ← برای دیدن محصولات بیشتر بکشید 😊 →
         </div>

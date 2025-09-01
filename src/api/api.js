@@ -2,7 +2,8 @@ import axios from "axios"; // 📦 ایمپورت کتابخانه axios برا�
 
 // 📌 ساخت یک instance از axios با تنظیمات پیش‌فرض
 const api = axios.create({
-  baseURL: "https://cafejsonserver.liara.run", // 🌐 آدرس پیش‌فرض سرور (API Base URL) — قابل تغییر
+  // baseURL: "https://cafejsonserver.liara.run", // 🌐 آدرس پیش‌فرض سرور (API Base URL) — قابل تغییر
+  baseURL: "http://localhost:3000/",
   timeout: 10000, // ⏳ حداکثر زمان انتظار برای پاسخ (10 ثانیه)
   headers: {
     "Content-Type": "application/json", // 📄 فرمت داده ارسالی JSON
