@@ -12,7 +12,7 @@ export function ThemeProvider({ children }) {
     const fetchTheme = async () => {
       try {
         // 🌐 گرفتن تنظیمات تم از سرور
-        const res = await api.get("moro/theme/");
+        const res = await api.get("/theme");
         console.log("res :",res)
         setTheme(res.data); // ✅ تم دریافتی را مستقیم ست کن
       } catch (error) {

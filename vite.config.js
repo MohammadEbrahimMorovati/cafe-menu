@@ -15,4 +15,15 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    host: true,   // معادل 0.0.0.0
+    port: 5173,   // چون 5173 پر بود
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });

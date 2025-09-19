@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import App from "../App";
 import { TenantProvider } from "../contexts/TenantProvider";
+import { ThemeProvider } from "../contexts/ThemeContext";
 
 // اگر صفحه/لی‌اوت‌های دیگری داشتی، اینجا ایمپورت‌شان کن
 
@@ -11,7 +12,16 @@ export default function AppRoutes() {
       <Route path="/" element={<Navigate to="/iman-cafe" replace />} />
 
       {/* مسیر اصلی به‌صورت اسلاگ‌دار */}
-      <Route path="/:slug/*" element={<TenantProvider><App /></TenantProvider>} />
+      <Route
+        path="/:slug/*"
+        element={
+          <TenantProvider>
+            <ThemeProvider >
+            <App />
+            </ThemeProvider>
+          </TenantProvider>
+        }
+      />
     </Routes>
   );
 }
