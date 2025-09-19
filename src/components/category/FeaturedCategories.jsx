@@ -46,28 +46,34 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
             <div
               key={cat.id}
               onClick={() => scrollToCategory(cat.id)}
-              className="flex-shrink-0 w-44 h-56 relative cursor-pointer group"
+              className="flex-shrink-0 w-44 h-56 relative cursor-pointer group 
+             rounded-2xl overflow-hidden shadow-lg transition-all duration-500 
+             hover:ring-2 hover:ring-yellow-400/70"
               style={{ scrollSnapAlign: "center" }}
             >
               {/* تصویر دسته */}
               <img
                 src={`${cat.image}`}
                 alt={cat.name}
-                className="w-full h-full object-cover rounded-2xl shadow-lg 
-                           transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover 
+               transition-transform duration-700 group-hover:scale-110"
               />
 
               {/* لایه گرادیان پایین */}
               <div
-                className="absolute inset-x-0 bottom-0 h-24 
-                              bg-gradient-to-t from-black/90 to-transparent 
-                              rounded-b-2xl transition-all duration-500 
-                              group-hover:from-black/95"
+                className="absolute inset-x-0 bottom-0 h-24 pointer-events-none
+               bg-gradient-to-t from-black/80 to-transparent 
+               rounded-b-2xl transition-all duration-500 
+               group-hover:from-black/95"
               ></div>
 
               {/* نام دسته */}
               <div className="absolute bottom-3 w-full text-center">
-                <span className="font-title text-white text-lg font-bold drop-shadow-lg tracking-wide px-2 py-1 bg-black/40 rounded-md group-hover:bg-black/70 transition">
+                <span
+                  className="font-title text-white text-lg font-bold drop-shadow-lg tracking-wide 
+                     px-2 py-1 bg-black/40 rounded-md transition 
+                     group-hover:bg-black/70"
+                >
                   {cat.name}
                 </span>
               </div>

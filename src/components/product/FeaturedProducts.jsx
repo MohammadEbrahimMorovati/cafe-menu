@@ -1,11 +1,9 @@
 "use client";
 import { useTheme } from "../../contexts/useTheme";
-import { Star } from "lucide-react"; // 📦 آیکون ستاره برای بج ویژه
+import { Star } from "lucide-react";
 
-// 📌 کامپوننت محصولات ویژه
 const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
   const { theme } = useTheme();
-
   if (!products?.length) return null;
 
   const scrollToProduct = (productId) => {
@@ -18,39 +16,36 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
   const featured = products.slice(0, 5);
 
   return (
-    <div className="mb-8">
+    <div className="mb-10">
       {/* 🏷 عنوان بخش */}
       <h2
-        className="text-xl font-title font-extrabold mb-6 text-center tracking-wide"
+        className="text-2xl font-title font-extrabold mb-6 text-center tracking-wide relative after:block after:w-20 after:h-0.5 after:bg-gradient-to-r after:from-yellow-400 after:to-red-400 after:mx-auto after:mt-2"
         style={{ color: theme.primary_color }}
       >
         {title}
       </h2>
 
-      {/* 📜 لیست محصولات به صورت اسکرولی افقی */}
+      {/* 📜 لیست محصولات */}
       <div className="overflow-x-auto scrollbar-hide">
         <div className="flex gap-6 pb-3" style={{ width: "max-content" }}>
           {featured.map((product) => (
             <div
               key={product.id}
               onClick={() => scrollToProduct(product.id)}
-              className="relative flex-shrink-0 w-48 rounded-2xl 
-                         backdrop-blur-md shadow-lg hover:shadow-2xl hover:scale-105 
-                         transition-all duration-300 cursor-pointer overflow-hidden"
+              className="relative flex-shrink-0 w-48 rounded-2xl bg-opacity-80 backdrop-blur-md 
+                         shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all duration-300 
+                         cursor-pointer overflow-hidden group border border-white/20"
               style={{
-                border: `2px solid ${theme.borderColor}`,
                 backgroundColor: theme.cardBg,
               }}
             >
               {/* بج ویژه */}
               <div
-                className="absolute top-2 left-2 text-xs px-2 py-1 rounded-full flex items-center gap-1 shadow font-body"
-                style={{
-                  backgroundColor: theme.featuredBadgeBg,
-                  color: theme.featuredBadgeText,
-                }}
+                className="absolute top-2 left-2 text-xs px-2.5 py-1 rounded-full flex items-center gap-1 
+                           shadow font-body font-semibold bg-[#FFD700] text-black"
               >
-                <Star className="w-3 h-3" /> ویژه
+                <Star className="w-3.5 h-3.5" />
+                ویژه
               </div>
 
               {/* تصویر محصول */}
@@ -60,9 +55,9 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
               >
                 {product.image ? (
                   <img
-                    src={`${product.image}`}
+                    src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 ) : (
                   <span
@@ -76,16 +71,10 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
 
               {/* اطلاعات محصول */}
               <div className="p-3 text-center">
-                <h3
-                  className="text-base font-title font-bold mb-1 line-clamp-1"
-                  style={{ color: theme.productTitle }}
-                >
+                <h3 className="text-base font-title font-bold mb-1 line-clamp-1 bg-gradient-to-r from-amber-700 via-yellow-600 to-orange-500 bg-clip-text text-transparent">
                   {product.name}
                 </h3>
-                <p
-                  className="text-xs line-clamp-2 font-body"
-                  style={{ color: theme.productDescription }}
-                >
+                <p className="text-xs line-clamp-2 font-body text-[#3e2c22] opacity-80">
                   {product.description || "توضیحات محصول"}
                 </p>
               </div>
@@ -95,12 +84,12 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
       </div>
 
       {/* ℹ️ متن راهنمای اسکرول */}
-      <div className="flex justify-center mt-3">
+      <div className="flex justify-center mt-4">
         <div
-          className="text-xs opacity-70 font-body"
+          className="flex items-center gap-2 text-xs opacity-70 font-body"
           style={{ color: theme.primary_color }}
         >
-          ← برای دیدن محصولات بیشتر بکشید 😊 →
+          <span>←</span> برای دیدن محصولات بیشتر بکشید <span>→</span>
         </div>
       </div>
     </div>
