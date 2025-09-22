@@ -30,7 +30,7 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
         className="text-2xl sm:text-3xl font-extrabold tracking-widest mb-6 text-center drop-shadow-xl"
         style={{ color: primaryColor }}
       >
-        {title} 
+         {title} 
       </h2>
 
       {/* 📜 لیست دسته‌بندی‌ها (اسکرول نرم iOS) */}
