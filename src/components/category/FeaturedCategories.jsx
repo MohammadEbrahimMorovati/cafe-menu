@@ -27,10 +27,10 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
     <div className="mb-12">
       {/* 🏷 عنوان */}
       <h2
-        className="text-2xl font-title font-extrabold mb-6 text-center tracking-wide"
+        className="text-2xl sm:text-3xl font-extrabold tracking-widest mb-6 text-center drop-shadow-xl"
         style={{ color: primaryColor }}
       >
-        {title}
+        {title} 
       </h2>
 
       {/* 📜 لیست دسته‌بندی‌ها (اسکرول نرم iOS) */}
@@ -68,11 +68,10 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
               ></div>
 
               {/* نام دسته */}
-              <div className="absolute bottom-3 w-full text-center">
+              <div className="absolute bottom-3 w-full text-center px-2">
                 <span
-                  className="font-title text-white text-lg font-bold drop-shadow-lg tracking-wide 
-                     px-2 py-1 bg-black/40 rounded-md transition 
-                     group-hover:bg-black/70"
+                  className="block text-lg sm:text-xl font-bold text-white drop-shadow-lg tracking-wide 
+                     line-clamp-1 transition"
                 >
                   {cat.name}
                 </span>
@@ -84,7 +83,7 @@ const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }
 
       {/* ✨ متن راهنما */}
       <p
-        className="text-center text-sm mt-3 opacity-70 font-body"
+        className="text-xs sm:text-sm italic text-center mt-3 opacity-80"
         style={{ color: primaryColor }}
       >
         ← برای دیدن دسته‌بندی‌ها بکشید →

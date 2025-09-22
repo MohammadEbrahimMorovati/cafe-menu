@@ -1,9 +1,9 @@
-"use client";
 import { useTheme } from "../../contexts/useTheme";
 import { Star } from "lucide-react";
 
 const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
   const { theme } = useTheme();
+
   if (!products?.length) return null;
 
   const scrollToProduct = (productId) => {
@@ -14,82 +14,83 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
   };
 
   const featured = products.slice(0, 5);
+  const primaryColor = theme.primary;
 
   return (
-    <div className="mb-10">
-      {/* 🏷 عنوان بخش */}
-      <h2
-        className="text-2xl font-title font-extrabold mb-6 text-center tracking-wide relative after:block after:w-20 after:h-0.5 after:bg-gradient-to-r after:from-yellow-400 after:to-red-400 after:mx-auto after:mt-2"
-        style={{ color: theme.primary_color }}
-      >
-        {title}
-      </h2>
+    <div className="mb-16">
+      {/* 🏷 عنوان لوکس */}
+      <div className="flex items-center justify-center gap-3 mb-10">
+        <span className="h-px w-20 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+        <h2
+          className="text-2xl sm:text-3xl font-extrabold tracking-widest text-center drop-shadow-xl"
+          style={{ color: primaryColor }}
+        >
+          ✨ {title} ✨
+        </h2>
+        <span className="h-px w-20 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+      </div>
 
       {/* 📜 لیست محصولات */}
       <div className="overflow-x-auto scrollbar-hide">
-        <div className="flex gap-6 pb-3" style={{ width: "max-content" }}>
+        <div className="flex gap-8 pb-6" style={{ width: "max-content" }}>
           {featured.map((product) => (
             <div
               key={product.id}
               onClick={() => scrollToProduct(product.id)}
-              className="relative flex-shrink-0 w-48 rounded-2xl bg-opacity-80 backdrop-blur-md 
-                         shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all duration-300 
-                         cursor-pointer overflow-hidden group border border-white/20"
-              style={{
-                backgroundColor: theme.cardBg,
-              }}
+              className="group relative flex-shrink-0 w-56 rounded-3xl 
+              overflow-hidden cursor-pointer
+              border border-yellow-400 shadow-[0_0_20px_rgba(250,204,21,0.2)]
+              hover:shadow-[0_0_35px_rgba(250,204,21,0.4)]
+              transform hover:-translate-y-3 transition-all duration-500"
             >
-              {/* بج ویژه */}
-              <div
-                className="absolute top-2 left-2 text-xs px-2.5 py-1 rounded-full flex items-center gap-1 
-                           shadow font-body font-semibold bg-[#FFD700] text-black"
-              >
-                <Star className="w-3.5 h-3.5" />
-                ویژه
-              </div>
-
               {/* تصویر محصول */}
-              <div
-                className="w-full h-32 flex items-center justify-center overflow-hidden"
-                style={{ backgroundColor: theme.secondary_color }}
-              >
+              <div className="relative w-full h-56 flex items-center justify-center overflow-hidden">
                 {product.image ? (
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover transition-all duration-700 
+                      group-hover:scale-110"
                   />
                 ) : (
-                  <span
-                    className="text-2xl font-title font-bold"
-                    style={{ color: theme.textPrimary }}
-                  >
+                  <span className="text-4xl font-bold text-yellow-600">
                     {product.name?.[0] || "?"}
                   </span>
                 )}
+
+                {/* لایه گرادیان پایین + متن */}
+                <div
+                  className="absolute inset-x-0 bottom-0 h-28 
+                  bg-gradient-to-t from-black/80 to-transparent 
+                  rounded-b-2xl flex flex-col items-center justify-end 
+                  px-3 pb-3 text-center transition-all duration-500 
+                  group-hover:from-black/95"
+                >
+                  <span className="block text-lg sm:text-xl font-bold text-white drop-shadow-lg line-clamp-1">
+                    {product.name}
+                  </span>
+                  <span className="block mt-1 text-xs sm:text-sm text-gray-200 drop-shadow-md line-clamp-1">
+                    {product.description || "توضیحات محصول"}
+                  </span>
+                </div>
               </div>
 
-              {/* اطلاعات محصول */}
-              <div className="p-3 text-center">
-                <h3 className="text-base font-title font-bold mb-1 line-clamp-1 bg-gradient-to-r from-amber-700 via-yellow-600 to-orange-500 bg-clip-text text-transparent">
-                  {product.name}
-                </h3>
-                <p className="text-xs line-clamp-2 font-body text-[#3e2c22] opacity-80">
-                  {product.description || "توضیحات محصول"}
-                </p>
+              {/* بج ویژه */}
+              <div className="absolute top-3 left-3 bg-white/70 border border-yellow-400 text-yellow-600 text-xs px-3 py-1 rounded-full flex items-center gap-1 shadow-md backdrop-blur-sm">
+                <Star className="w-3 h-3 text-yellow-500" /> ویژه
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ℹ️ متن راهنمای اسکرول */}
-      <div className="flex justify-center mt-4">
+      {/* ℹ️ متن راهنما */}
+      <div className="flex justify-center mt-5">
         <div
-          className="flex items-center gap-2 text-xs opacity-70 font-body"
-          style={{ color: theme.primary_color }}
+          className="text-xs sm:text-sm italic opacity-80 animate-bounce"
+          style={{ color: primaryColor }}
         >
-          <span>←</span> برای دیدن محصولات بیشتر بکشید <span>→</span>
+          ← برای دیدن محصولات بیشتر بکشید →
         </div>
       </div>
     </div>

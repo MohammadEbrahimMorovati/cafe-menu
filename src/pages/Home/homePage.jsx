@@ -8,6 +8,7 @@ import FeaturedProducts from "../../components/product/FeaturedProducts";
 import CategorySection from "../../components/category/CategorySection";
 import { useTheme } from "../../contexts/useTheme";
 import CartDrawer from "../../components/cart/CartDrawer";
+import { borderStyles } from "../../theme/borderStyles";
 
 const HomePage = () => {
   const { theme } = useTheme();
@@ -16,15 +17,20 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   // کلاس حاشیه از سرور + مقدار پیش‌فرض اگر نبود
-  const borderClasses = useMemo(
-    () =>
-      theme?.border_style_css ||
-      "max-w-2xl mx-auto rounded-[57px] p-2 border-[7px] border-[var(--bcolor)]",
-    [theme]
-  );
-  console.log('====================================');
-  console.log("borderClasses :",borderClasses);
-  console.log('====================================');
+  const borderClasses = useMemo(() => {
+    const defaultStyle =
+      "max-w-2xl mx-auto rounded-[57px] p-2 border-[7px] border-solid border-[#000000]";
+    if (!theme?.border_style?.id) return defaultStyle;
+
+    const selectedStyle = borderStyles.find(
+      (style) => style.id === theme.border_style.id
+    );
+    return selectedStyle?.cssStyle || defaultStyle;
+  }, [theme]);
+
+  console.log("====================================");
+  console.log("borderClasses :", borderClasses);
+  console.log("====================================");
 
   useEffect(() => {
     const fetchData = async () => {
