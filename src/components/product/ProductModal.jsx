@@ -1,126 +1,52 @@
-// import { X } from "lucide-react";
-
-// const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
-//   if (!isOpen || !product) return null;
-
-//   const { name, description, image, price, discount = 0 } = product;
-//   const hasDiscount = discount > 0;
-//   const finalPrice = hasDiscount ? price - (price * discount) / 100 : price;
-
-//   return (
-//     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-//       <div className="bg-[#fffaf4] w-full max-w-md rounded-3xl shadow-xl overflow-hidden relative animate-fadeIn border border-white/30">
-//         {/* دکمه بستن */}
-//         <button
-//           onClick={onClose}
-//           className="absolute top-3 right-3 text-brown-800/70 hover:text-red-500 transition"
-//         >
-//           <X size={24} />
-//         </button>
-
-//         {/* عکس محصول */}
-//         <div className="w-full h-60 bg-[#f3ebe2]">
-//           <img
-//             src={image || "cat-default.jpg"}
-//             alt={name}
-//             className="w-full h-full object-cover object-center"
-//           />
-//         </div>
-
-//         {/* اطلاعات محصول */}
-//         <div className="p-6 text-center">
-//           <h2 className="text-2xl font-extrabold text-[#3e2c22] mb-2">
-//             {name}
-//           </h2>
-
-//           {description && (
-//             <p className="text-sm text-[#5c4330] mb-4 leading-relaxed">
-//               {description}
-//             </p>
-//           )}
-
-//           {/* قیمت */}
-//           <div className="mb-6">
-//             {hasDiscount ? (
-//               <div className="flex justify-center items-center gap-3">
-//                 <span className="line-through text-gray-400 text-sm">
-//                   {price.toLocaleString("fa-IR")} تومان
-//                 </span>
-//                 <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm">
-//                   {finalPrice.toLocaleString("fa-IR")} تومان
-//                 </span>
-//               </div>
-//             ) : (
-//               <span className="bg-yellow-400 text-[#3e2c22] px-3 py-1 rounded-full text-sm">
-//                 {price.toLocaleString("fa-IR")} تومان
-//               </span>
-//             )}
-//           </div>
-
-//           {/* دکمه افزودن به سبد خرید */}
-//           <button
-//             onClick={() => {
-//               onAddToCart(product);
-//               onClose();
-//             }}
-//             className="w-full bg-[#3e2c22] text-white font-semibold py-2.5 rounded-xl hover:bg-[#5a3f2e] transition-all duration-200 shadow-sm"
-//           >
-//             افزودن به سبد خرید
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductModal;
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useEffect, useRef, useState } from "react";
 import { X, Star, Minus, Plus, Coffee } from "lucide-react";
+import useBodyFreeze from "../../hooks/useBodyFreeze";
 
+// تبدیل اعداد به فرمت فارسی
 const formatFA = (n) => Number(n || 0).toLocaleString("fa-IR");
 
 const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
-  if (!isOpen || !product) return null;
+  useBodyFreeze(isOpen); // قفل کردن اسکرول وقتی مودال باز است
 
+  const dialogRef = useRef(null);
+  useEffect(() => {
+    if (!isOpen) return;
+    dialogRef.current?.focus();
+    const onKey = (e) => e.key === "Escape" && onClose?.();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose]);
+
+  // مقداردهی پیش‌فرض حتی وقتی product وجود نداره
   const {
-    name,
-    description,
-    image,
+    name = "",
+    description = "",
+    image = "",
     price = 0,
     discount = 0,
     rating = 4.6,
-    calories,
-    origin,
+    calories = null,
+    origin = "",
     tags = [],
-  } = product;
+  } = product || {};
 
   const hasDiscount = discount > 0;
   const finalPrice = useMemo(
     () => (hasDiscount ? Math.round(price - (price * discount) / 100) : price),
-    [price, discount, hasDiscount]
+    [price, discount]
   );
 
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("متوسط");
   const [sugar, setSugar] = useState(1);
   const [notes, setNotes] = useState("");
+
   const total = useMemo(() => finalPrice * qty, [finalPrice, qty]);
 
-  const dialogRef = useRef(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      dialogRef.current?.focus();
-      const onKey = (e) => e.key === "Escape" && onClose?.();
-      window.addEventListener("keydown", onKey);
-      return () => {
-        document.body.style.overflow = prev || "";
-        window.removeEventListener("keydown", onKey);
-      };
-    }
-  }, [isOpen, onClose]);
+  const sugarLabel = (lvl) =>
+    lvl === 0 ? "بی‌قند" : lvl === 1 ? "عادی" : "شیرین";
+  const fullStars = Math.floor(rating);
+  const halfStar = rating - fullStars >= 0.5;
 
   const handleAdd = () => {
     onAddToCart?.({
@@ -135,10 +61,8 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
     onClose?.();
   };
 
-  const sugarLabel = (lvl) =>
-    lvl === 0 ? "بی‌قند" : lvl === 1 ? "عادی" : "شیرین";
-  const fullStars = Math.floor(rating);
-  const halfStar = rating - fullStars >= 0.5;
+  // شرط بعد از hooks می‌آید
+  if (!isOpen || !product) return null;
 
   return (
     <div
@@ -152,15 +76,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="
-          w-full max-w-2xl md:max-w-3xl
-          max-h-[92vh] overflow-y-auto overflow-x-hidden no-scrollbar
-          rounded-[28px] shadow-2xl relative
-          border border-amber-100/70
-          bg-[#fffaf4]
-          ring-1 ring-white/40
-          animate-[modalIn_220ms_ease-out]
-        "
+        className="w-full max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto overflow-x-hidden no-scrollbar rounded-[28px] shadow-2xl relative border border-amber-100/70 bg-[#fffaf4] ring-1 ring-white/40 animate-[modalIn_220ms_ease-out]"
         style={{
           boxShadow:
             "0 30px 80px rgba(62,44,34,0.35), inset 0 1px 0 rgba(255,255,255,0.5)",
@@ -178,11 +94,14 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
         {/* دکمه بستن */}
         <button
           onClick={onClose}
-          className="absolute top-3 left-3 md:top-4 md:left-4 h-10 w-10 grid place-items-center rounded-full bg-white/80 hover:bg-white shadow-md border border-white/60 transition"
+          className="absolute top-3 left-3 md:top-4 md:left-4 
+             h-10 w-10 grid place-items-center rounded-full 
+             bg-white shadow-md border border-gray-200 
+             hover:bg-gray-100 z-50" // 👈 z-50 اضافه شد
           aria-label="بستن"
           title="بستن"
         >
-          <X size={20} className="text-[#3e2c22]" />
+          <X size={20} className="text-gray-800" />
         </button>
 
         {/* هدر تصویری */}
@@ -387,7 +306,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
         </div>
       </div>
 
-      {/* استایل‌های تکمیلی: انیمیشن و مخفی کردن اسکرول‌بار */}
+      {/* استایل‌های تکمیلی */}
       <style>{`
         @keyframes modalIn { from { opacity:0; transform: translateY(10px) scale(.98) } to { opacity:1; transform: translateY(0) scale(1) } }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
