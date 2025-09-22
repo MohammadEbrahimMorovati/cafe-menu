@@ -150,7 +150,15 @@
 // export default ProductCard;
 
 import React, { useEffect, useMemo, useState, useCallback } from "react";
-import { Heart, Flame, Leaf, Star, BadgePercent, Coffee } from "lucide-react";
+import {
+  Heart,
+  Flame,
+  Leaf,
+  Star,
+  BadgePercent,
+  Coffee,
+  ChefHat,
+} from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 import { calculateFinalPrice } from "../../services/products/productService";
 import ProductModal from "./ProductModal";
@@ -304,7 +312,7 @@ export default function CafeProductCard({ product }) {
           <div className="rounded-2xl border border-white/10 bg-gradient-to-tr from-black/70 via-black/40 to-transparent backdrop-blur-md p-3 md:p-4 text-white shadow-[0_10px_25px_-15px_rgba(0,0,0,.9)]">
             <div className="flex items-start gap-2">
               <div className="shrink-0 rounded-xl bg-[var(--cafe-primary)]/15 p-2 border border-[var(--cafe-primary)]/20">
-                <Coffee size={20} className="text-[var(--cafe-primary)]" />
+                <ChefHat size={20} className="text-[var(--cafe-primary)]" />
               </div>
               <div className="min-w-0">
                 <h3 className="font-title font-extrabold tracking-tight text-base md:text-lg leading-snug line-clamp-2">
