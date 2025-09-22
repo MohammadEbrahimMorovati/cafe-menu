@@ -1,52 +1,82 @@
+import { useEffect, useState } from "react";
 import { useTheme } from "../../contexts/useTheme";
 import TextType from "../ui/TextType";
-import Wave from "react-wavify"; // 📦 اضافه کن
+import Wave from "react-wavify";
 
-const StickyHeader = () => {
+const ABOUT_URL = "http://127.0.0.1:8000/api/v1/cafes/moro/about/";
+
+function extractName(d) {
+  const direct =
+    d?.name ||
+    d?.title ||
+    d?.cafe_name ||
+    d?.heading ||
+    d?.site_name ||
+    d?.cafe?.name ||
+    d?.owner?.cafe_name;
+  if (typeof direct === "string" && direct.trim()) return direct.trim();
+
+  const html = d?.body || d?.content || d?.about || d?.description;
+  if (typeof html === "string" && html.trim()) {
+    try {
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const h1 = doc.querySelector("h1")?.textContent?.trim();
+      if (h1) return h1;
+    } catch {}
+    const m = html.match(/^\s*#\s+(.+)$/m); // تیتر مارک‌داون
+    if (m?.[1]) return m[1].trim();
+  }
+  return null;
+}
+
+export default function StickyHeader() {
   const { theme } = useTheme();
+  const [cafeName, setCafeName] = useState("کافه");
 
-  // 🎨 رنگ‌ها
-  const logoColor = theme.primary_color;
-  const logoBackground = "#ffffff";
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(ABOUT_URL, {
+          headers: { Accept: "application/json" },
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setCafeName(extractName(data) || "کافه");
+      } catch (e) {
+        console.error("About fetch failed:", e);
+      }
+    })();
+  }, []);
 
   return (
     <div className="relative pt-4 mb-8 overflow-hidden">
-      {/* 🌊 موج متحرک بالای هدر */}
       <Wave
-        fill= {theme.secondary_color} // رنگ موج (قهوه‌ای تیره‌تر)
+        fill={theme.secondary_color}
         paused={false}
-        options={{
-          height: 40, // ارتفاع موج
-          amplitude: 40, // میزان بالا و پایین رفتن موج
-          speed: 0.25, // سرعت حرکت
-          points: 3, // تعداد قوس‌ها
-        }}
-        className="absolute top-0 left-0 w-full h-32 scale-y-[-1]" // 👈 برعکس و بالا
+        options={{ height: 40, amplitude: 40, speed: 0.25, points: 3 }}
+        className="absolute top-0 left-0 w-full h-32 scale-y-[-1]"
       />
-
-      {/* محتوای اصلی هدر */}
       <div className="relative max-w-2xl mx-auto px-4 z-10">
         <div className="flex flex-col items-center">
-          {/* 🔵 دایره لوگو */}
           <div
             className="w-20 h-20 rounded-full flex items-center justify-center mb-2 shadow-md"
-            style={{ backgroundColor: logoBackground }}
+            style={{ backgroundColor: "#fff" }}
           >
-            <div className="text-3xl" style={{ color: logoColor }}>
+            <div className="text-3xl" style={{ color: theme.primary_color }}>
               ☕
             </div>
           </div>
-
-          {/* ⌨️ متن با افکت تایپ */}
+          {/* key باعث میشه متن بعد از دریافت name جدید دوباره تایپ بشه */}
           <TextType
+            key={cafeName}
             text={[
-              "منوی رستوران مورو",
+              `منوی ${cafeName}`,
               "برای سفارش کلیک کنید",
-              "تجربه‌ای متفاوت با مورو",
+              `تجربه‌ای متفاوت با ${cafeName}`,
             ]}
             typingSpeed={80}
             pauseDuration={2000}
-            showCursor={true}
+            showCursor
             cursorCharacter="|"
             className="font-title font-extrabold mt-1 text-2xl text-white tracking-wide"
             style={{ textShadow: "0 1px 10px rgba(0,0,0,0.4)" }}
@@ -55,6 +85,4 @@ const StickyHeader = () => {
       </div>
     </div>
   );
-};
-
-export default StickyHeader;
+}
