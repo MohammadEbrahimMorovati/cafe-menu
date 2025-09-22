@@ -6,10 +6,14 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
 
   if (!products?.length) return null;
 
-  const scrollToProduct = (productId) => {
-    const element = document.getElementById(`product-section-${productId}`);
+  const scrollToProduct = (categoryId, productId) => {
+    const element = document.getElementById(
+      `product-${categoryId}-${productId}`
+    );
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      console.warn("❌ Product not found:", categoryId, productId);
     }
   };
 
@@ -32,7 +36,7 @@ const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {
           {featured.map((product) => (
             <div
               key={product.id}
-              onClick={() => scrollToProduct(product.id)}
+              onClick={() => scrollToProduct(product.category, product.id)}
               className="flex-shrink-0 w-44 h-56 relative cursor-pointer group 
              rounded-2xl overflow-hidden shadow-lg transition-all duration-500 
              hover:ring-2 hover:ring-yellow-400/70"

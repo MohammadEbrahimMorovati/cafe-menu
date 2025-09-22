@@ -86,16 +86,25 @@ const HomePage = () => {
             />
 
             <FeaturedProducts products={products} title="محصولات ویژه" />
-
             <div className="space-y-6">
-              {categories.map(({ id, name }) => (
-                <CategorySection
-                  key={id}
-                  products={products}
-                  categoryId={id}
-                  title={name}
-                />
-              ))}
+              {[
+                ...new Map(
+                  products.map((p) => [p.category, p.category_name])
+                ).entries(),
+              ].map(([categoryId, categoryName]) => {
+                const categoryProducts = products.filter(
+                  (p) => p.category === categoryId
+                );
+
+                return (
+                  <CategorySection
+                    key={categoryId} // 👈 دسته
+                    products={categoryProducts} // 👈 محصولات اون دسته
+                    categoryId={categoryId}
+                    title={categoryName}
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
