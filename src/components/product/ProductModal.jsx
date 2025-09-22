@@ -75,7 +75,7 @@
 
 // export default ProductModal;
 import { useEffect, useMemo, useRef, useState } from "react";
-import { X, Star, Heart, Minus, Plus, Coffee } from "lucide-react";
+import { X, Star, Minus, Plus, Coffee } from "lucide-react";
 
 const formatFA = (n) => Number(n || 0).toLocaleString("fa-IR");
 
@@ -100,26 +100,20 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
     [price, discount, hasDiscount]
   );
 
-  // UI state
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("متوسط");
-  const [sugar, setSugar] = useState(1); // 0 بی‌قند، 1 عادی، 2 شیرین
+  const [sugar, setSugar] = useState(1);
   const [notes, setNotes] = useState("");
   const total = useMemo(() => finalPrice * qty, [finalPrice, qty]);
 
-  // Accessibility & UX
   const dialogRef = useRef(null);
 
   useEffect(() => {
     if (isOpen) {
-      // قفل اسکرول پشت‌زمینه
       const prev = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-      // فوکوس اولیه
       dialogRef.current?.focus();
-      const onKey = (e) => {
-        if (e.key === "Escape") onClose?.();
-      };
+      const onKey = (e) => e.key === "Escape" && onClose?.();
       window.addEventListener("keydown", onKey);
       return () => {
         document.body.style.overflow = prev || "";
@@ -129,7 +123,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
   }, [isOpen, onClose]);
 
   const handleAdd = () => {
-    const payload = {
+    onAddToCart?.({
       ...product,
       qty,
       size,
@@ -137,25 +131,19 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
       notes,
       finalPrice,
       total,
-    };
-    onAddToCart?.(payload);
+    });
     onClose?.();
   };
 
   const sugarLabel = (lvl) =>
     lvl === 0 ? "بی‌قند" : lvl === 1 ? "عادی" : "شیرین";
-
-  // ستاره‌ها
   const fullStars = Math.floor(rating);
   const halfStar = rating - fullStars >= 0.5;
 
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-3 md:px-6"
-      onMouseDown={(e) => {
-        // کلیک روی اوورلی ببنده
-        if (e.target === e.currentTarget) onClose?.();
-      }}
+      onMouseDown={(e) => e.target === e.currentTarget && onClose?.()}
       dir="rtl"
       role="dialog"
       aria-modal="true"
@@ -166,7 +154,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
         tabIndex={-1}
         className="
           w-full max-w-2xl md:max-w-3xl
-          max-h-[92vh] overflow-y-auto
+          max-h-[92vh] overflow-y-auto overflow-x-hidden no-scrollbar
           rounded-[28px] shadow-2xl relative
           border border-amber-100/70
           bg-[#fffaf4]
@@ -178,9 +166,9 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
             "0 30px 80px rgba(62,44,34,0.35), inset 0 1px 0 rgba(255,255,255,0.5)",
         }}
       >
-        {/* ربان تخفیف */}
+        {/* ربان تخفیف (داخل کادر) */}
         {hasDiscount && (
-          <div className="absolute -top-3 -left-3 z-10">
+          <div className="absolute top-3 right-3 z-10">
             <div className="bg-green-600 text-white text-xs md:text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
               {discount}% تخفیف
             </div>
@@ -198,7 +186,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
         </button>
 
         {/* هدر تصویری */}
-        <div className="relative">
+        <div className="relative overflow-hidden rounded-t-[28px]">
           <div className="w-full h-56 md:h-80 bg-[#f3ebe2]">
             <img
               src={image || "/images/cafe/default.jpg"}
@@ -207,10 +195,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
               loading="eager"
             />
           </div>
-
-          {/* حلقه نور دور تصویر */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#fffaf4] via-transparent to-transparent opacity-80" />
-          {/* نشان ویژه/سیگنچر در گوشه */}
           <div className="absolute bottom-3 right-3 flex items-center gap-2">
             <div className="bg-white/85 backdrop-blur px-3 py-1.5 rounded-full border border-amber-100 shadow">
               <div className="flex items-center gap-1.5 text-[#5c4330] text-xs md:text-sm">
@@ -223,7 +208,6 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
 
         {/* بدنه اطلاعات */}
         <div className="p-4 md:p-6 lg:p-8">
-          {/* عنوان و امتیاز */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
             <h2
               id="product-modal-title"
@@ -231,7 +215,6 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
             >
               {name}
             </h2>
-
             <div className="flex items-center gap-2">
               <div className="flex items-center">
                 {[...Array(fullStars)].map((_, i) => (
@@ -249,7 +232,6 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
             </div>
           </div>
 
-          {/* متادیتا (اختیاری) */}
           {(origin || calories) && (
             <div className="flex flex-wrap items-center gap-2 mb-4">
               {origin && (
@@ -265,14 +247,12 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
             </div>
           )}
 
-          {/* توضیحات */}
           {description && (
             <p className="text-[15px] md:text-base leading-7 text-[#5c4330] bg-white/70 rounded-2xl p-3 border border-amber-100/70 shadow-sm mb-4">
               {description}
             </p>
           )}
 
-          {/* تگ‌ها */}
           {tags?.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-5">
               {tags.slice(0, 6).map((t, i) => (
@@ -306,7 +286,6 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
 
           {/* گزینه‌ها */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {/* سایز */}
             <div className="bg-white/80 rounded-2xl border border-amber-100 p-3 shadow-sm">
               <div className="text-sm font-semibold text-[#3e2c22] mb-2">
                 سایز
@@ -328,7 +307,6 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
               </div>
             </div>
 
-            {/* میزان شیرینی */}
             <div className="bg-white/80 rounded-2xl border border-amber-100 p-3 shadow-sm">
               <div className="text-sm font-semibold text-[#3e2c22] mb-2">
                 میزان شیرینی
@@ -351,7 +329,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
             </div>
           </div>
 
-          {/* یادداشت برای باریستا */}
+          {/* یادداشت */}
           <div className="mb-6">
             <label className="text-sm font-semibold text-[#3e2c22] mb-2 block">
               یادداشت برای باریستا (اختیاری)
@@ -365,7 +343,7 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
             />
           </div>
 
-          {/* کنترل تعداد + جمع کل */}
+          {/* تعداد + جمع کل */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
             <div className="flex items-center gap-3">
               <span className="text-sm text-[#3e2c22]/80">تعداد</span>
@@ -397,33 +375,23 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
             </div>
           </div>
 
-          {/* اکشن‌ها */}
-          <div className="flex items-center gap-3 mt-4">
+          {/* اکشن اصلی */}
+          <div className="mt-4">
             <button
               onClick={handleAdd}
-              className="flex-1 bg-[#3e2c22] text-white font-semibold py-3 rounded-2xl hover:bg-[#5a3f2e] transition-all duration-200 shadow-md"
+              className="w-full bg-[#3e2c22] text-white font-semibold py-3 rounded-2xl hover:bg-[#5a3f2e] transition-all duration-200 shadow-md"
             >
               افزودن به سبد خرید
-            </button>
-
-            <button
-              type="button"
-              className="h-[52px] w-[52px] grid place-items-center rounded-2xl border border-amber-200 bg-white/90 hover:bg-amber-50 transition shadow"
-              aria-label="افزودن به علاقه‌مندی‌ها"
-              title="افزودن به علاقه‌مندی‌ها"
-            >
-              <Heart size={20} className="text-[#3e2c22]" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* انیمیشن کلیدی (Tailwind arbitrary) */}
+      {/* استایل‌های تکمیلی: انیمیشن و مخفی کردن اسکرول‌بار */}
       <style>{`
-        @keyframes modalIn {
-          from { opacity: 0; transform: translateY(10px) scale(.98); }
-          to   { opacity: 1; transform: translateY(0)     scale(1); }
-        }
+        @keyframes modalIn { from { opacity:0; transform: translateY(10px) scale(.98) } to { opacity:1; transform: translateY(0) scale(1) } }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
       `}</style>
     </div>
   );
