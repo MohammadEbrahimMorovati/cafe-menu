@@ -1,7 +1,7 @@
 import api from "../../api/api";
 
 // دریافت تمام دسته‌بندی‌ها
-export const getAllCategories = () => api.get("/categories");
+export const getAllCategories = (slug) => api.get(`${slug}/categories`);
 
 // دریافت دسته‌بندی بر اساس ID
 export const getCategoryById = (id) => api.get(`/categories/${id}`);

@@ -1,7 +1,8 @@
+// src\services\products\productService.js
 import api from "../../api/api";
 
 // دریافت تمام محصولات
-export const getAllProducts = () => api.get("/products");
+export const getAllProducts = (slug) => api.get(`${slug}/products`);
 
 // دریافت محصولات بر اساس دسته‌بندی
 export const getProductsByCategory = (categoryId) =>
