@@ -1,16 +1,32 @@
-import axios from "axios"; // 📦 ایمپورت کتابخانه axios برای ارسال درخواست HTTP
+// src/api/api.js
+import axios from "axios";
 
-// 📌 ساخت یک instance از axios با تنظیمات پیش‌فرض
+// 📌 یک global variable برای tenant (ابتدا null)
+let currentTenant = null;
+
+// 👇 فانکشن برای آپدیت global tenant (از TenantProvider کال می‌شه)
+export const setCurrentTenant = (tenant) => {
+  currentTenant = tenant;
+};
+
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/v1/cafes", // 🌐 آدرس پیش‌فرض سرور (API Base URL)
-  timeout: 10000, // ⏳ حداکثر زمان انتظار برای پاسخ (10 ثانیه)
-  headers: {
-    "Content-Type": "application/json", // 📄 فرمت داده ارسالی JSON
-  },
+  baseURL: "http://127.0.0.1:8000/api/v1/cafes",
+  timeout: 10000,
+  headers: { "Content-Type": "application/json" },
 });
 
+// 👇 Interceptor برای اضافه کردن tenant به URL
+api.interceptors.request.use(
+  (config) => {
+    if (currentTenant) {
+      // 👇 URL رو تغییر بده: /cafes + /${currentTenant} + rest (مثل /theme -> /cafes/slug/theme)
+      config.url = `/${currentTenant}${config.url}`;
+    } else {
+      console.warn("Tenant not set yet!");
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-
-
-export default api; // 📤 خروجی گرفتن instance برای استفاده در کل پروژه
-
+export default api;

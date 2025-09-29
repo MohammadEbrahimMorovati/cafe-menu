@@ -2,7 +2,7 @@
 import api from "../../api/api";
 
 // دریافت تمام محصولات
-export const getAllProducts = (slug) => api.get(`${slug}/products`);
+export const getAllProducts = (slug) => api.get(`/products`);
 
 // دریافت محصولات بر اساس دسته‌بندی
 export const getProductsByCategory = (categoryId) =>

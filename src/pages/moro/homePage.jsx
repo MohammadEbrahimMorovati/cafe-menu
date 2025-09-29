@@ -116,7 +116,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import { getAllProducts } from "../../services/products/productService";
 import { getAllCategories } from "../../services/category/categoryService";
@@ -133,7 +132,6 @@ import { borderStyles } from "../../theme/borderStyles";
 
 const HomePage = () => {
   const { theme } = useTheme();
-  const { slug } = useParams();
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -158,8 +156,8 @@ const HomePage = () => {
     const fetchData = async () => {
       try {
         const [productsRes, categoriesRes] = await Promise.all([
-          getAllProducts(slug),
-          getAllCategories(slug),
+          getAllProducts(),
+          getAllCategories(),
         ]);
         setProducts(productsRes?.data?.results ?? []);
         setCategories(categoriesRes?.data?.results ?? []);
