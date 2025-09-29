@@ -1,4 +1,4 @@
-import HomePage from "./pages/Home/homePage";
+import HomePage from "./pages/moro/homePage";
 import { useEffect } from "react";
 
 function App() {

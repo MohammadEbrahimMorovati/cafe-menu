@@ -9,7 +9,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       {/* اختیاری: ریدایرکت از روت به یک اسلاگ پیش‌فرض */}
-      <Route path="/" element={<Navigate to="/iman-cafe" replace />} />
+      <Route path="/" element={<Navigate to="/moro/iman-cafe" replace />} />
 
       {/* مسیر اصلی به‌صورت اسلاگ‌دار */}
       <Route

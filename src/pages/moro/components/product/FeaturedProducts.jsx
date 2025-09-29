@@ -264,7 +264,7 @@
 // };
 
 // export default FeaturedProducts;
-import { useTheme } from "../../contexts/useTheme";
+import { useTheme } from "../../../../contexts/useTheme";
 import { Star } from "lucide-react";
 
 const FeaturedProducts = ({ products, title = "محصولات ویژه" }) => {

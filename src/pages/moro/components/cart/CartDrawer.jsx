@@ -10,7 +10,7 @@ import {
   Store,
   TicketPercent,
 } from "lucide-react";
-import { useCart } from "../../contexts/CartContext";
+import { useCart } from "../../../../contexts/CartContext";
 
 const formatFA = (n) => Number(n || 0).toLocaleString("fa-IR");
 

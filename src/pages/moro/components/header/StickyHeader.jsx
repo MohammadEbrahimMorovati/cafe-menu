@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTheme } from "../../contexts/useTheme";
+import { useTheme } from "../../../../contexts/useTheme";
 import TextType from "../ui/TextType";
 import Wave from "react-wavify";
 

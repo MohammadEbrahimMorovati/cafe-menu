@@ -240,7 +240,7 @@
 // };
 
 // export default FeaturedCategories;
-import { useTheme } from "../../contexts/useTheme";
+import { useTheme } from "../../../../contexts/useTheme";
 
 const FeaturedCategories = ({ categories, title = "دسته‌بندی‌ها" }) => {
   const { theme } = useTheme();

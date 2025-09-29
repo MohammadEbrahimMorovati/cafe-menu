@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useRef, useState } from "react";
 import { X, Star, Minus, Plus, Coffee } from "lucide-react";
-import useBodyFreeze from "../../hooks/useBodyFreeze";
+import useBodyFreeze from "../../../../hooks/useBodyFreeze";
 
 // تبدیل اعداد به فرمت فارسی
 const formatFA = (n) => Number(n || 0).toLocaleString("fa-IR");

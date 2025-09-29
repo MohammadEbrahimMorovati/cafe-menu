@@ -159,8 +159,8 @@ import {
   Coffee,
   ChefHat,
 } from "lucide-react";
-import { useCart } from "../../contexts/CartContext";
-import { calculateFinalPrice } from "../../services/products/productService";
+import { useCart } from "../../../../contexts/CartContext";
+import { calculateFinalPrice } from "../../../../services/products/productService";
 import ProductModal from "./ProductModal";
 
 const FAV_KEY = "favorite_ids";

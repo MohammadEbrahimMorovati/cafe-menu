@@ -119,12 +119,12 @@ import { useEffect, useMemo, useState } from "react";
 import { getAllProducts } from "../../services/products/productService";
 import { getAllCategories } from "../../services/category/categoryService";
 
-import LoadingSpinner from "../../components/ui/LoadingSpinner";
-import StickyHeader from "../../components/header/StickyHeader";
-import FeaturedCategories from "../../components/category/FeaturedCategories";
-import FeaturedProducts from "../../components/product/FeaturedProducts";
-import CategorySection from "../../components/category/CategorySection";
-import CartDrawer from "../../components/cart/CartDrawer";
+import LoadingSpinner from "./components/ui/LoadingSpinner";
+import StickyHeader from "./components/header/StickyHeader";
+import FeaturedCategories from "./components/category/FeaturedCategories";
+import FeaturedProducts from "./components/product/FeaturedProducts";
+import CategorySection from "./components/category/CategorySection";
+import CartDrawer from "./components/cart/CartDrawer";
 
 import { useTheme } from "../../contexts/useTheme";
 import { borderStyles } from "../../theme/borderStyles";
