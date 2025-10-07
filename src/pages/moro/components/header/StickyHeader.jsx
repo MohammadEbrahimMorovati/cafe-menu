@@ -3,7 +3,7 @@ import { useTheme } from "../../../../contexts/useTheme";
 import TextType from "../ui/TextType";
 import Wave from "react-wavify";
 
-const ABOUT_URL = "http://127.0.0.1:8000/api/v1/cafes/moro/about/";
+const ABOUT_URL = "http://caffee.workingserverlite.eu:8888/api/v1/cafes/moro/about/";
 
 function extractName(d) {
   const direct =
