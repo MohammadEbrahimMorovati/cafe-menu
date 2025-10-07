@@ -16,11 +16,23 @@ const api = axios.create({
 });
 
 // 👇 Interceptor برای اضافه کردن tenant به URL
+// api.interceptors.request.use(
+//   (config) => {
+//     if (currentTenant) {
+//       // 👇 URL رو تغییر بده: /cafes + /${currentTenant} + rest (مثل /theme -> /cafes/slug/theme)
+//       config.url = `/${currentTenant}${config.url}`;
+//     } else {
+//       console.warn("Tenant not set yet!");
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 api.interceptors.request.use(
   (config) => {
     if (currentTenant) {
-      // 👇 URL رو تغییر بده: /cafes + /${currentTenant} + rest (مثل /theme -> /cafes/slug/theme)
       config.url = `/${currentTenant}${config.url}`;
+      console.log("🌐 Final API URL:", config.baseURL + config.url);
     } else {
       console.warn("Tenant not set yet!");
     }
