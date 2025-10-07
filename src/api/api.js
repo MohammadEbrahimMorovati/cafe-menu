@@ -10,7 +10,7 @@ export const setCurrentTenant = (tenant) => {
 };
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/v1/cafes",
+  baseURL: "http://caffee.workingserverlite.eu:8888/api/v1/cafes",
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
 });
